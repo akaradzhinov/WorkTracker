@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
-@EnableJpaRepositories("bg.tu.sofia.repository")
+@EnableJpaRepositories("bg.sofia.tu.*")
 @SpringBootApplication
 public class WorkTrackerApplication {
 
