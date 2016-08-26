@@ -1,0 +1,19 @@
+<!-- Basic modal -->
+<div class="modal fade" id="basicAlertModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" th:fragment="modal(title, text)">
+    <div class="modal-dialog modal-vertical-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="modalAlertTitle" th:text="${title != ''}? ${title} : 'Confirmation dialog'" th:if="${title != null}">Confirmation dialog</h4>
+            </div>
+            <div class="modal-body" id="modalAlertBody">
+                <p th:text="${text != ''} ? ${text} : 'Are you sure you want to proceed?'">Are you sure you want to proceed?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary btn-save-changes" data-dismiss="modal">Continue</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END Basic modal -->

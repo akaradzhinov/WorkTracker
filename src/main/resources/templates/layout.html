@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Last Man Standing</title>
+    <!-- Font Awesome -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/>
+
+    <!--Bootstrap Stylesheet [ REQUIRED ]-->
+    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.css}" media="screen"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap-theme.min.css}" media="screen"/>
+
+    <!--LMS App Stylesheet [ REQUIRED ]-->
+    <link th:href="@{/css/main.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/bootstrap/bootstrap-datetimepicker.min.css}" rel="stylesheet" media="screen"/>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+    <script th:src="@{/js/bootstrap/validator.min.js}"></script>
+    <script th:src="@{/js/bootstrap/bootstrap-datetimepicker.min.js}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function(event) {
+            $('#basicAlertModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget),// Button that triggered the modal
+                        url = button.data('continue-url');
+                $(this).find('.btn-save-changes').click(function(e) {
+                    if (url !== undefined) {
+                        window.location = url;
+                    } else {
+                        // A button for submitting a form
+                        button.parent().submit()
+                    }
+                })
+            })
+        });
+    </script>
+</head>
+<body>
+<div layout:fragment="modal">asdad</div>
+<div id="container" class="effect mainnav-lg">
+    <div th:replace="fragments/header :: header"></div>
+    <div class="boxed">
+        <div th:replace="fragments/content_container :: content"></div>
+        <div th:replace="fragments/main_navigation :: mainnav"></div>
+    </div>
+    <div th:replace="fragments/footer :: footer"></div>
+</div>
+<script th:src="@{/js/main.js}"></script>
+</body>
+</html>

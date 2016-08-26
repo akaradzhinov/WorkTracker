@@ -21,7 +21,7 @@ public class Account implements java.io.Serializable {
     private Long id;
 
     @Column(unique = true)
-    private String email;
+    private String username;
 
     @JsonIgnore
     private String password;
@@ -30,27 +30,30 @@ public class Account implements java.io.Serializable {
 
     private Timestamp created;
 
+    private int enabled;
+
     protected Account() {
 
     }
 
-    public Account(String email, String password, String role) {
-        this.email = email;
+    public Account(String username, String password, String role) {
+        this.username = username;
         this.password = password;
         this.role = role;
         this.created = new Timestamp(new Date().getTime());
+        enabled = 1;
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -71,5 +74,13 @@ public class Account implements java.io.Serializable {
 
     public Timestamp getCreated() {
         return created;
+    }
+
+    public int getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(int enabled) {
+        this.enabled = enabled;
     }
 }

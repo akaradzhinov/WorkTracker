@@ -1,0 +1,49 @@
+<!--HEADER NAVBAR-->
+<!--===================================================-->
+<header id="navbar" th:fragment="header">
+    <div id="navbar-container" class="boxed">
+        <!--Brand logo & name-->
+        <!--================================-->
+        <div class="navbar-header">
+            <a href="#" class="navbar-brand">
+                <img th:src="@{/img/navbar_header.png}" alt="Last Man Standing" title="Last Man Standing" class="brand-icon"/>
+            </a>
+        </div>
+        <!--================================-->
+        <!--End brand logo & name-->
+
+        <!--Navbar controls-->
+        <!--================================-->
+        <div class="navbar-content clearfix">
+            <ul class="nav navbar-top-links pull-right">
+                <!--Search Form-->
+                <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+                <li id="search" class="pull-left">
+                    <form class="navbar-form navbar-left" role="form" th:action="@{/users/search}" data-toggle="validator">
+                        <div class="form-group">
+                            <input type="text" class="form-control input-lg" th:required="required" placeholder="Search Users by PPID" name="username"/>
+                        </div>
+                        <button type="submit" class="btn btn-default btn-lg">
+                            <span class="fa fa-search fa-lg"></span>
+                        </button>
+                    </form>
+                </li>
+                <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+                <!--End Form-->
+                <!--Logout btn-->
+                <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+                <li id="logout" class="pull-right">
+                    <a th:href="@{/logout}" class="btn btn-default btn-lg"  role="button">
+                        <span class="fa fa-power-off fa-lg"></span>
+                    </a>
+                </li>
+                <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+                <!--End Logout btn-->
+            </ul>
+        </div>
+        <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+        <!--End Navbar controls-->
+    </div>
+</header>
+<!--===================================================-->
+<!--END HEADER NAVBAR-->

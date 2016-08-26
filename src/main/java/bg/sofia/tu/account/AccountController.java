@@ -1,16 +1,15 @@
 package bg.sofia.tu.account;
 import java.security.Principal;
+import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * author: Aleksandar Karadzhinov
@@ -19,14 +18,16 @@ import org.springframework.web.bind.annotation.PathVariable;
  * created on 15/08/2016 @ 20:28.
  */
 @Controller
+@RequestMapping("/accounts")
 class AccountController {
 
+    private static final String ROLE_USER = "ROLE_USER";
+
+    @Autowired
     private AccountRepository accountRepository;
 
     @Autowired
-    public AccountController(AccountRepository accountRepository) {
-        this.accountRepository = accountRepository;
-    }
+    private PasswordEncoder passwordEncoder;
 
     @RequestMapping(value = "account/current", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
@@ -34,7 +35,7 @@ class AccountController {
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
     public Account currentAccount(Principal principal) {
         Assert.notNull(principal);
-        return accountRepository.findOneByEmail(principal.getName());
+        return accountRepository.findOneByUsername(principal.getName());
     }
 
     @RequestMapping(value = "account/{id}", method = RequestMethod.GET)
@@ -43,5 +44,26 @@ class AccountController {
     @Secured("ROLE_ADMIN")
     public Account account(@PathVariable("id") Long id) {
         return accountRepository.findOne(id);
+    }
+
+    @RequestMapping
+    public String index(Model model) {
+        model.addAttribute("request", new CreateAccountRequest());
+        return "create_account";
+    }
+
+    @RequestMapping(value = "/createUpdate", method = RequestMethod.POST)
+    public String createAccount(@ModelAttribute("request") CreateAccountRequest createAccountRequest, final Model model) {
+        Account account = new Account(createAccountRequest.getUsername(), createAccountRequest.getPassword(), ROLE_USER);
+        account.setPassword(passwordEncoder.encode(account.getPassword()));
+
+        try {
+            accountRepository.save(account);
+        } catch (Exception ex) {
+            model.addAttribute("globalErrors", Arrays.asList("Username already exists!"));
+            return "create_account";
+        }
+
+        return "redirect:/accounts";
     }
 }

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--Bootstrap Stylesheet [ REQUIRED ]-->
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.css" media="screen"/>
+
+    <!--LMS App Stylesheet [ REQUIRED ]-->
+    <link href="css/main.css" rel="stylesheet"/>
+</head>
+<body>
+<div id="loginWrapper" layout:fragment="content">
+    <img src="img/logo.png" />
+    <form class="bs-component" name="f" th:action="@{/login}" method="post">
+        <div class="form-group">
+            <label class="control-label" for="userName">User Name</label><br />
+            <input class="form-control input-lg" id="userName" name="username" type="text"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="password">Password</label><br />
+            <input class="form-control input-lg" id="password" value="" type="password" name="password"/>
+        </div>
+        <div th:if="${param.error}" class="alert alert-dismissable alert-danger">
+            Invalid username or password.
+        </div>
+        <button type="submit" class="btn btn-primary">Log in</button>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!--CONTENT CONTAINER-->
+<!--===================================================-->
+<div id="content-container" th:fragment="content">
+    <!--Page Title-->
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <div id="page-title">
+        <h1 class="page-header text-overflow"><span layout:fragment="title">Manage Tasks</span></h1>
+    </div>
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <!--End page title-->
+
+    <!--Breadcrumb-->
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <ol class="breadcrumb" layout:fragment="breadcrumb">
+        <li><a href="#">Home</a></li>
+    </ol>
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <!--End breadcrumb-->
+
+    <div role="alert" class="alert alert-danger" th:if="${globalErrors}">
+        <div th:each="err : ${globalErrors}" th:text="${err}"></div>
+    </div>
+
+    <!--Page content-->
+    <!--===================================================-->
+    <div id="page-content">
+        <div layout:fragment="content"></div>
+    </div>
+    <!--===================================================-->
+    <!--End page content-->
+</div>
+<!--===================================================-->
+<!--END CONTENT CONTAINER-->

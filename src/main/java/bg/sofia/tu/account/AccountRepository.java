@@ -11,5 +11,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long> {
-	Account findOneByEmail(String email);
+	Account findOneByUsername(String username);
 }

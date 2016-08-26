@@ -1,0 +1,62 @@
+<!--MAIN NAVIGATION-->
+<!--===================================================-->
+<nav id="mainnav-container" th:fragment="mainnav">
+    <div id="mainnav">
+        <!--Menu-->
+        <!--================================-->
+        <div id="mainnav-menu-wrap">
+            <div class="nano">
+                <div class="nano-content">
+                    <ul id="mainnav-menu" class="list-group">
+                        <!--Menu list item-->
+                        <li th:attr="class=${(#httpServletRequest.getRequestURI().contains('/tournaments') || #httpServletRequest.getRequestURI().contains('/rounds')) ? 'active-link' : ''}">
+                            <a th:href="@{/tournaments}">
+                                <span class="menu-title"> Tournaments</span>
+                            </a>
+                        </li>
+                        <!--Menu list item-->
+                        <li th:attr="class=${#httpServletRequest.getRequestURI().contains('/results') ? 'active-link' : ''}">
+                            <a th:href="@{/results}">
+                                <span class="menu-title"> Results</span>
+                            </a>
+                        </li>
+                        <!--Menu list item-->
+                        <li th:attr="class=${#httpServletRequest.getRequestURI().contains('/marketing') ? 'active-link' : ''}">
+                            <a th:href="@{/marketing/images}">
+                                <span class="menu-title"> Marketing</span>
+                            </a>
+                        </li>
+                        <!--Menu list item-->
+                        <li th:attr="class=${#httpServletRequest.getRequestURI().contains('/notifications') ? 'active-link' : ''}">
+                            <a th:href="@{/notifications}">
+                                <span class="menu-title"> Notifications</span>
+                            </a>
+                        </li>
+                        <!--Menu list item-->
+                        <li th:attr="class=${#httpServletRequest.getRequestURI().contains('/mobile_configuration') ? 'active-link' : ''}">
+                            <a th:href="@{/mobile_configuration}">
+                                <span class="menu-title"> Configuration</span>
+                            </a>
+                        </li>
+                        <!--Menu list item-->
+                        <li th:attr="class=${#httpServletRequest.getRequestURI().contains('/report') ? 'active-link' : ''}">
+                            <a th:href="@{/report}">
+                                <span class="menu-title"> Report</span>
+                            </a>
+                        </li>
+                        <!--Menu list item-->
+                        <li th:attr="class=${#httpServletRequest.getRequestURI().contains('/teams') ? 'active-link' : ''}">
+                            <a th:href="@{/teams}">
+                                <span class="menu-title"> Teams</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--================================-->
+        <!--End menu-->
+    </div>
+</nav>
+<!--===================================================-->
+<!--END MAIN NAVIGATION-->
