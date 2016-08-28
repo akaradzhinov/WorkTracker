@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html layout:decorator="layout">
+<head>
+</head>
+
+<body>
+<div layout:fragment="modal">
+    <div th:replace="fragments/modal :: modal('', '')"></div>
+</div>
+<span layout:fragment="title">Create user</span>
+<ol class="breadcrumb" layout:fragment="breadcrumb">
+    <li><a th:href="@{/tasks}">Home</a></li>
+    <li class="active">Teams</li>
+</ol>
+</body>
+</html>

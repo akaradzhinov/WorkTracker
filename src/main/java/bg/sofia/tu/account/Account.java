@@ -20,32 +20,43 @@ public class Account implements java.io.Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String username;
 
     @JsonIgnore
+    @Column(nullable = false)
     private String password;
 
-    private String role = "ROLE_USER";
+    @Column(unique = true, nullable = false)
+    private String email;
 
+    @Column(nullable = false)
+    private String role;
+
+    @Column(nullable = false)
     private Timestamp created;
 
-    private int enabled;
+    private boolean enabled;
 
     protected Account() {
 
     }
 
-    public Account(String username, String password, String role) {
+    public Account(String username, String password, String email, String role, boolean enabled) {
         this.username = username;
         this.password = password;
+        this.email = email;
         this.role = role;
         this.created = new Timestamp(new Date().getTime());
-        enabled = 1;
+        this.enabled = enabled;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -76,11 +87,19 @@ public class Account implements java.io.Serializable {
         return created;
     }
 
-    public int getEnabled() {
+    public boolean getEnabled() {
         return enabled;
     }
 
-    public void setEnabled(int enabled) {
+    public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

@@ -1,5 +1,6 @@
 package bg.sofia.tu.config;
 
+import bg.sofia.tu.account.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -34,6 +35,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DriverManagerDataSource dataStore;
 
+    @Autowired
+    private AccountService accountService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -45,8 +48,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
 //                .antMatchers("/users/**", "/tournaments/**", "/results/**", "/marketing/**", "/notifications/**", "/mobile_configuration/**").hasRole("ADMIN")
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/account/**").hasRole("USER")
+                .antMatchers("/accounts/**").hasRole("ADMIN")
+//                .antMatchers("/accounts/**").hasRole("USER")
                 .anyRequest().authenticated()
 
                 .and()
@@ -54,7 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .defaultSuccessUrl("/task/list", true)
+                .defaultSuccessUrl("/tasks", true)
                 .permitAll()
 
                 .and()
@@ -70,20 +73,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        if (adminUsername == null || adminUsername.length() == 0) {
-//            adminUsername = "admin";
-//        }
-//        if (adminPassword == null || adminPassword.length() == 0) {
-//            adminPassword = "admin";
-//        }
-//        auth
-//                .inMemoryAuthentication()
-//                .withUser(adminUsername).password(adminPassword).roles("ADMIN");
         auth
                 .jdbcAuthentication()
                 .dataSource(dataStore)
                 .passwordEncoder(passwordEncoder())
                 .usersByUsernameQuery("select username,password,enabled from account where username=?")
                 .authoritiesByUsernameQuery("select username,role from account where username=?");
+
+        auth
+                .jdbcAuthentication()
+                .dataSource(dataStore)
+                .passwordEncoder(passwordEncoder())
+                .usersByUsernameQuery("select email,password,enabled from account where email=?")
+                .authoritiesByUsernameQuery("select email,role from account where email=?");
     }
 }

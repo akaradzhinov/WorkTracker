@@ -50,6 +50,13 @@
                                 <span class="menu-title"> Teams</span>
                             </a>
                         </li>
+                        <div sec:authorize="hasRole('ROLE_ADMIN')">
+                            <li th:attr="class=${#httpServletRequest.getRequestURI().contains('/accounts') ? 'active-link' : ''}">
+                                <a th:href="@{/accounts}">
+                                    <span class="menu-title"> Accounts</span>
+                                </a>
+                            </li>
+                        </div>
                     </ul>
                 </div>
             </div>
