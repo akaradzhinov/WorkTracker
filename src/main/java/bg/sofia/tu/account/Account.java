@@ -13,12 +13,12 @@ import java.util.Date;
  * created on 15/08/2016 @ 20:28.
  */
 @Entity
-@Table(name = "account")
+@Table(name = "accounts")
 public class Account implements java.io.Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
 
     @Column(unique = true, nullable = false)
     private String username;
@@ -51,11 +51,11 @@ public class Account implements java.io.Serializable {
         this.enabled = enabled;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -87,6 +87,10 @@ public class Account implements java.io.Serializable {
         return created;
     }
 
+    public void setCreated(Timestamp created) {
+        this.created = created;
+    }
+
     public boolean getEnabled() {
         return enabled;
     }
@@ -101,5 +105,19 @@ public class Account implements java.io.Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Account{");
+        sb.append("id=").append(id);
+        sb.append(", username='").append(username).append('\'');
+        sb.append(", password='").append(password).append('\'');
+        sb.append(", email='").append(email).append('\'');
+        sb.append(", role='").append(role).append('\'');
+        sb.append(", created=").append(created);
+        sb.append(", enabled=").append(enabled);
+        sb.append('}');
+        return sb.toString();
     }
 }

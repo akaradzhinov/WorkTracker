@@ -77,14 +77,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .jdbcAuthentication()
                 .dataSource(dataStore)
                 .passwordEncoder(passwordEncoder())
-                .usersByUsernameQuery("select username,password,enabled from account where username=?")
-                .authoritiesByUsernameQuery("select username,role from account where username=?");
+                .usersByUsernameQuery("select username,password,enabled from accounts where username=?")
+                .authoritiesByUsernameQuery("select username,role from accounts where username=?");
 
         auth
                 .jdbcAuthentication()
                 .dataSource(dataStore)
                 .passwordEncoder(passwordEncoder())
-                .usersByUsernameQuery("select email,password,enabled from account where email=?")
-                .authoritiesByUsernameQuery("select email,role from account where email=?");
+                .usersByUsernameQuery("select email,password,enabled from accounts where email=?")
+                .authoritiesByUsernameQuery("select email,role from accounts where email=?");
     }
 }

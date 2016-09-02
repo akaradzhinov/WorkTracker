@@ -9,6 +9,14 @@
     <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
     <!--End page title-->
 
+    <!--Breadcrumb-->
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <ol class="breadcrumb" layout:fragment="breadcrumb">
+        <li><a href="#">Home</a></li>
+    </ol>
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <!--End breadcrumb-->
+
     <div role="alert" class="alert alert-danger" th:if="${globalErrors}">
         <div th:each="err : ${globalErrors}" th:text="${err}"></div>
     </div>

@@ -1,6 +1,8 @@
 package bg.sofia.tu.account;
 
+import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import bg.sofia.tu.utils.ValidatorUtils;
@@ -36,21 +38,32 @@ class AccountController {
         account = new Account();
         model.addAttribute("account", account);
 
+        return "accounts";
+    }
+
+    @RequestMapping(value = "/create")
+    public String create(Model model) {
+        account = new Account();
+        model.addAttribute("account", account);
+
         return "create_account";
     }
 
-    @RequestMapping(value = "/createUpdate", method = RequestMethod.POST)
+    @RequestMapping(value = "/manage", method = RequestMethod.POST)
     public String createAccount(@ModelAttribute("account") Account account, final Model model) {
+        System.out.println("Managing account: " + account.toString());
+
         if(!ValidatorUtils.validateEmail(account.getEmail())) {
             model.addAttribute("globalErrors", Arrays.asList("Email must be valid!"));
             return "create_account";
         }
 
-        if(account.getId() == null && account.getPassword() != null) {
+        if(account.getId() == 0 && account.getPassword() != null) {
             account.setPassword(passwordEncoder.encode(account.getPassword()));
         }
 
         try {
+            account.setCreated(new Timestamp(new Date().getTime()));
             accountRepository.save(account);
         } catch (Exception ex) {
             model.addAttribute("globalErrors", Arrays.asList("Username or email already exist!"));
@@ -60,11 +73,11 @@ class AccountController {
         return "redirect:/accounts";
     }
 
-    @RequestMapping("edit/{id}")
-    public String edit(@PathVariable long id, Model model) {
+    @RequestMapping("edit/{username}")
+    public String edit(@PathVariable String username, Model model) {
         final List<Account> accounts = this.getAllAccounts();
         for (final Account account : accounts) {
-            if (account.getId() == id) {
+            if (account.getUsername().equals(username)) {
                 this.account = account;
                 break;
             }
