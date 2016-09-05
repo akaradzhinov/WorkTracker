@@ -20,17 +20,17 @@ public class Account implements java.io.Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, length = 32)
     private String username;
 
     @JsonIgnore
-    @Column(nullable = false)
+    @Column(nullable = false, length = 60)
     private String password;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, length = 32)
     private String email;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 10)
     private String role;
 
     @Column(nullable = false)

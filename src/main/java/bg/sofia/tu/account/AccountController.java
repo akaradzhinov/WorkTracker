@@ -50,9 +50,7 @@ class AccountController {
     }
 
     @RequestMapping(value = "/manage", method = RequestMethod.POST)
-    public String createAccount(@ModelAttribute("account") Account account, final Model model) {
-        System.out.println("Managing account: " + account.toString());
-
+    public String manage(@ModelAttribute("account") Account account, final Model model) {
         if(!ValidatorUtils.validateEmail(account.getEmail())) {
             model.addAttribute("globalErrors", Arrays.asList("Email must be valid!"));
             return "create_account";
@@ -63,9 +61,14 @@ class AccountController {
         }
 
         try {
-            account.setCreated(new Timestamp(new Date().getTime()));
-            accountRepository.save(account);
+            if(account.getId() > 0) {
+                accountRepository.updateInfo(account.getUsername(), account.getEmail(), account.getRole(), account.getEnabled(), account.getId());
+            } else {
+                account.setCreated(new Timestamp(new Date().getTime()));
+                accountRepository.save(account);
+            }
         } catch (Exception ex) {
+            ex.printStackTrace();
             model.addAttribute("globalErrors", Arrays.asList("Username or email already exist!"));
             return "create_account";
         }
@@ -88,7 +91,7 @@ class AccountController {
     }
 
     @RequestMapping("state/{id}/{active}")
-    public String changeAccountState(@PathVariable long id, @PathVariable boolean active, Model model) {
+    public String changeState(@PathVariable long id, @PathVariable boolean active, Model model) {
         Account selectedAccount = null;
         final List<Account> accounts = this.getAllAccounts();
         for (final Account account : accounts) {
@@ -111,48 +114,5 @@ class AccountController {
 
     private List<Account> getAllAccounts() {
         return accountRepository.findAll();
-    }
-
-    public class CreateAccountRequest {
-
-        private String username;
-
-        private String password;
-
-        private String email;
-
-        public String getUsername() {
-            return username;
-        }
-
-        public void setUsername(String username) {
-            this.username = username;
-        }
-
-        public String getPassword() {
-            return password;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        @Override
-        public String toString() {
-            final StringBuilder sb = new StringBuilder("CreateAccountRequest [");
-            sb.append("username='").append(username).append('\'');
-            sb.append(", password='").append(password).append('\'');
-            sb.append(", email='").append(email).append('\'');
-            sb.append(']');
-            return sb.toString();
-        }
     }
 }
