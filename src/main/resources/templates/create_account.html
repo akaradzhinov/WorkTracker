@@ -16,27 +16,33 @@
             <div class="border-gray">
                 <input type="hidden" th:field="${account.id}"/>
 
-                <div class="form-group">
-                    <label class="control-label" for="username">Username</label><br />
+                <div class="form-group m-5">
+                    <label class="control-label l-1" for="name">Name</label><br />
+                    <input id="name" class="form-control" type="text" th:required="required" data-minlength="6" data-maxlength="32" th:field="${account.name}"/>
+                    <div class="help-block with-errors"></div>
+                </div>
+
+                <div class="form-group m-5">
+                    <label class="control-label l-1" for="username">Username</label><br />
                     <input id="username" class="form-control" type="text" th:required="required" data-minlength="6" data-maxlength="32" th:field="${account.username}"/>
                     <div class="help-block with-errors"></div>
                 </div>
 
-                <div class="form-group">
-                    <label class="control-label" for="email">Email</label><br />
+                <div class="form-group m-5">
+                    <label class="control-label l-1" for="email">Email</label><br />
                     <input id="email" class="form-control" type="text" th:required="required" data-maxlength="32" th:field="${account.email}"/>
                     <div class="help-block with-errors"></div>
                 </div>
 
-                <div class="form-group" th:if="${account?.password == null and account?.id == 0}">
-                    <label class="control-label" for="password">Password</label><br />
+                <div class="form-group m-5" th:if="${account?.password == null and account?.id == 0}">
+                    <label class="control-label l-1" for="password">Password</label><br />
                     <input id="password" class="form-control" type="text" th:required="required" data-minlength="6" data-maxlength="128" th:field="${account.password}"/>
                     <div class="help-block with-errors"></div>
                 </div>
 
-                <div class="form-group">
-                    <label class="control-label" for="userRole">Role</label><br />
-                    <select id="userRole" th:field="${account.role}">
+                <div class="form-group m-5">
+                    <label class="control-label l-1" for="userRole">Role</label><br />
+                    <select id="userRole" th:field="${account.role}" class="selectpicker">
                         <option th:each="role : ${T(bg.sofia.tu.enums.Role).values()}"
                                 th:value="${role.getValue()}"
                                 th:text="${role}">
@@ -44,8 +50,8 @@
                     </select>
                 </div>
 
-                <div class="form-group">
-                    <label class="control-label" for="enabled">Enabled</label><br />
+                <div class="form-group m-5">
+                    <label class="control-label l-1" for="enabled">Enabled</label><br />
                     <input id="enabled" type="checkbox" th:field="${account.enabled}" />
                 </div>
 

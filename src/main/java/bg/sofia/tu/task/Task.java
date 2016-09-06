@@ -2,6 +2,7 @@ package bg.sofia.tu.task;
 
 import bg.sofia.tu.account.Account;
 import bg.sofia.tu.enums.Priority;
+import bg.sofia.tu.enums.State;
 import bg.sofia.tu.enums.Type;
 
 import javax.persistence.*;
@@ -20,6 +21,8 @@ public class Task {
     private long id;
 
     private Type type;
+
+    private State state;
 
     private String summary;
 
@@ -52,6 +55,15 @@ public class Task {
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    @Column(nullable = false)
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 
     @Column(nullable = false)
@@ -117,5 +129,22 @@ public class Task {
 
     public void setPoints(int points) {
         this.points = points;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Task{");
+        sb.append("id=").append(id);
+        sb.append(", type=").append(type);
+        sb.append(", state=").append(state);
+        sb.append(", summary='").append(summary).append('\'');
+        sb.append(", description='").append(description).append('\'');
+        sb.append(", createDate=").append(createDate);
+        sb.append(", assignee=").append(assignee);
+        sb.append(", reporter=").append(reporter);
+        sb.append(", priority=").append(priority);
+        sb.append(", points=").append(points);
+        sb.append('}');
+        return sb.toString();
     }
 }

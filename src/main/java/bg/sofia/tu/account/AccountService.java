@@ -28,11 +28,11 @@ public class AccountService {
 	@PostConstruct	
 	protected void initialize() {
 		if(accountRepository.findOneByUsername("user") == null) {
-			save(new Account("user", "demo", "test@abv.bg", "ROLE_USER", true));
+			save(new Account("Test User", "user", "demo", "test@abv.bg", "ROLE_USER", true));
 		}
 
 		if(accountRepository.findOneByUsername("admin") == null) {
-			save(new Account("admin", "admin", "test1@abv.bg", "ROLE_ADMIN", true));
+			save(new Account("Grand Admin", "admin", "admin", "test1@abv.bg", "ROLE_ADMIN", true));
 		}
 	}
 

@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * author: Aleksandar Karadzhinov
  * email: aleksandar.karadjinov@gmail.com
@@ -20,4 +22,10 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 	@Transactional
 	@Query("update Account set username = ?1, email = ?2, role = ?3, enabled = ?4 where id = ?5")
 	int updateInfo(String username, String email, String role, boolean enabled, long id);
+
+    @Transactional
+    @Query("select username from Account where enabled = 1")
+	List<String> listAccoutUsernames();
+
+    List<Account> findAllByEnabled(boolean enabled);
 }

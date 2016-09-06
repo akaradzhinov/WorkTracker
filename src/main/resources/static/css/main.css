@@ -289,4 +289,16 @@ input.short, select.shortm, .input-group input.short {
 
 /*report end*/
 
+td.last {
+    width: 1px;
+    white-space: nowrap;
+}
+
+.m-5 {
+    margin: 10px 10px 10px 10px;
+}
+
+.l-1 {
+    margin-left: 5px;
+}
 /*# sourceMappingURL=main.css.map */

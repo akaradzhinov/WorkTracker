@@ -23,6 +23,9 @@ public class Account implements java.io.Serializable {
     @Column(unique = true, nullable = false, length = 32)
     private String username;
 
+    @Column(nullable = false, length = 32)
+    private String name;
+
     @JsonIgnore
     @Column(nullable = false, length = 60)
     private String password;
@@ -42,7 +45,8 @@ public class Account implements java.io.Serializable {
 
     }
 
-    public Account(String username, String password, String email, String role, boolean enabled) {
+    public Account(String name, String username, String password, String email, String role, boolean enabled) {
+        this.name = name;
         this.username = username;
         this.password = password;
         this.email = email;
@@ -65,6 +69,14 @@ public class Account implements java.io.Serializable {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPassword() {
@@ -112,6 +124,7 @@ public class Account implements java.io.Serializable {
         final StringBuilder sb = new StringBuilder("Account{");
         sb.append("id=").append(id);
         sb.append(", username='").append(username).append('\'');
+        sb.append(", name='").append(name).append("\'");
         sb.append(", password='").append(password).append('\'');
         sb.append(", email='").append(email).append('\'');
         sb.append(", role='").append(role).append('\'');
