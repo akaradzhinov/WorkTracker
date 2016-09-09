@@ -2,7 +2,6 @@ package bg.sofia.tu.account;
 
 import java.sql.Timestamp;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import bg.sofia.tu.utils.ValidatorUtils;
@@ -75,28 +74,21 @@ class AccountController {
 
     @RequestMapping("/edit/{username}")
     public String edit(@PathVariable String username, Model model) {
-        final List<Account> accounts = this.getAllAccounts();
-        for (final Account account : accounts) {
-            if (account.getUsername().equals(username)) {
-                this.account = account;
-                break;
-            }
+        this.account = accountRepository.findOneByUsername(username);
+
+        if(account == null) {
+            model.addAttribute("globalErrors", Arrays.asList("Could not find account with username=" + username));
+            return "accounts";
         }
 
         model.addAttribute("account", account);
+
         return "create_account";
     }
 
     @RequestMapping("/state/{id}/{active}")
     public String changeState(@PathVariable long id, @PathVariable boolean active, Model model) {
-        Account selectedAccount = null;
-        final List<Account> accounts = this.getAllAccounts();
-        for (final Account account : accounts) {
-            if (account.getId() == id) {
-                selectedAccount = account;
-                break;
-            }
-        }
+        Account selectedAccount = accountRepository.findOneById(id);
 
         if(selectedAccount == null) {
             model.addAttribute("globalErrors", Arrays.asList("Could not find account for disabling!"));

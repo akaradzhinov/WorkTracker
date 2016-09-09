@@ -18,6 +18,8 @@ import java.util.List;
 public interface AccountRepository extends JpaRepository<Account, Long> {
 	Account findOneByUsername(String username);
 
+	Account findOneById(Long id);
+
 	@Modifying
 	@Transactional
 	@Query("update Account set username = ?1, email = ?2, role = ?3, enabled = ?4 where id = ?5")

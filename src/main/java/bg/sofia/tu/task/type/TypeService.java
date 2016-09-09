@@ -1,6 +1,5 @@
 package bg.sofia.tu.task.type;
 
-import bg.sofia.tu.account.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;

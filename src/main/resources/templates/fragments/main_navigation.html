@@ -60,14 +60,14 @@
                         <div sec:authorize="hasRole('ROLE_ADMIN')">
                             <li th:attr="class=${#httpServletRequest.getRequestURI().contains('/types') ? 'active-link' : ''}">
                                 <a th:href="@{/types}">
-                                    <span class="menu-title"> Task Types</span>
+                                    <span class="menu-title"> Types</span>
                                 </a>
                             </li>
                         </div>
                         <div sec:authorize="hasRole('ROLE_ADMIN')">
                             <li th:attr="class=${#httpServletRequest.getRequestURI().contains('/priorities') ? 'active-link' : ''}">
                                 <a th:href="@{/priorities}">
-                                    <span class="menu-title"> Task Priorities</span>
+                                    <span class="menu-title"> Priorities</span>
                                 </a>
                             </li>
                         </div>

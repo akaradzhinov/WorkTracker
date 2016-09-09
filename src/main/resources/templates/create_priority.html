@@ -7,7 +7,7 @@
 <span layout:fragment="title" th:text="${priority.id > 0 ? priority.value : 'Create Task Priority'}">Create Type</span>
 <ol class="breadcrumb" layout:fragment="breadcrumb">
     <li><a th:href="@{/tasks}">Home</a></li>
-    <li><a th:href="@{/priorities}">Types</a></li>
+    <li><a th:href="@{/priorities}">Priorities</a></li>
     <li th:if="${priority.id > 0}" class="active">Edit</li>
     <li th:if="${priority.id == 0}" class="active">Create</li>
 </ol>

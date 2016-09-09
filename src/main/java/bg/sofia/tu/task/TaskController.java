@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -94,6 +95,55 @@ public class TaskController {
 
         return "redirect:/tasks";
     }
+
+    @RequestMapping(value = "/update/priority/{id}/{value}/")
+    public String updatePriority(@PathVariable long id, @PathVariable String value, Model model) {
+        Priority prior = priorityRepository.findOneByValue(value);
+        Task currentTask = taskRepository.findOneById(id);
+        currentTask.setPriority(prior);
+
+        try {
+            taskRepository.save(currentTask);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            model.addAttribute("globalErrors", Arrays.asList("Could not update task priority!"));
+        }
+
+        return "create_task";
+    }
+
+    @RequestMapping(value = "/update/type/{id}/{value}/")
+    public String updateType(@PathVariable long id, @PathVariable String value, Model model) {
+        Type type = typeRepository.findOneByValue(value);
+        Task currentTask = taskRepository.findOneById(id);
+        currentTask.setType(type);
+
+        try {
+            taskRepository.save(currentTask);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            model.addAttribute("globalErrors", Arrays.asList("Could not update task type!"));
+        }
+
+        return "create_task";
+    }
+
+    @RequestMapping(value = "/update/state/{id}/{value}/")
+    public String updateState(@PathVariable long id, @PathVariable State state, Model model) {
+        Task currentTask = taskRepository.findOneById(id);
+        currentTask.setState(state);
+
+        try {
+            taskRepository.save(currentTask);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            model.addAttribute("globalErrors", Arrays.asList("Could not update task state!"));
+        }
+
+        return "create_task";
+    }
+
+
 
     private List<Task> getToDoTasks() {
         return taskRepository.findAllByState(State.TODO);

@@ -1,6 +1,5 @@
 package bg.sofia.tu.config;
 
-import bg.sofia.tu.account.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -34,9 +33,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private DriverManagerDataSource dataStore;
-
-    @Autowired
-    private AccountService accountService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
