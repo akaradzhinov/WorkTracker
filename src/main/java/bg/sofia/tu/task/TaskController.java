@@ -2,9 +2,11 @@ package bg.sofia.tu.task;
 
 import bg.sofia.tu.account.Account;
 import bg.sofia.tu.account.AccountRepository;
-import bg.sofia.tu.enums.Priority;
 import bg.sofia.tu.enums.State;
-import bg.sofia.tu.enums.Type;
+import bg.sofia.tu.task.priority.Priority;
+import bg.sofia.tu.task.priority.PriorityRepository;
+import bg.sofia.tu.task.type.Type;
+import bg.sofia.tu.task.type.TypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -17,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.sql.Timestamp;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -36,6 +37,12 @@ public class TaskController {
     @Autowired
     private AccountRepository accountRepository;
 
+    @Autowired
+    private TypeRepository typeRepository;
+
+    @Autowired
+    private PriorityRepository priorityRepository;
+
 
     @RequestMapping
     public String index(Model model) {
@@ -49,6 +56,8 @@ public class TaskController {
     @RequestMapping(value = "/create")
     public String create(Model model) {
         model.addAttribute("allAccountUsernames", getAccountUsernames());
+        model.addAttribute("allTypes", typeRepository.findAll());
+        model.addAttribute("allPriorities", priorityRepository.findAll());
 
         model.addAttribute("task", new TaskRequest());
 
@@ -60,12 +69,12 @@ public class TaskController {
         Task task = new Task();
         task.setId(taskRequest.getId());
         task.setState(State.TODO);
-        task.setCreateDate(new Timestamp(new Date().getTime()));
+        task.setCreated(new Timestamp(System.currentTimeMillis()));
         task.setDescription(taskRequest.getDescription());
         task.setSummary(taskRequest.getSummary());
         task.setPoints(taskRequest.getPoints());
-        task.setPriority(taskRequest.getPriority());
-        task.setType(taskRequest.getType());
+        task.setPriority(priorityRepository.findOneByValue(taskRequest.getPriority()));
+        task.setType(typeRepository.findOneByValue(taskRequest.getType()));
 
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         try {
@@ -117,7 +126,7 @@ public class TaskController {
 
         private long id;
 
-        private Type type;
+        private String type;
 
         private String summary;
 
@@ -125,7 +134,7 @@ public class TaskController {
 
         private String assignee;
 
-        private Priority priority;
+        private String priority;
 
         private int points;
 
@@ -138,11 +147,11 @@ public class TaskController {
             this.id = id;
         }
 
-        public Type getType() {
+        public String getType() {
             return type;
         }
 
-        public void setType(Type type) {
+        public void setType(String type) {
             this.type = type;
         }
 
@@ -170,11 +179,11 @@ public class TaskController {
             this.assignee = assignee;
         }
 
-        public Priority getPriority() {
+        public String getPriority() {
             return priority;
         }
 
-        public void setPriority(Priority priority) {
+        public void setPriority(String priority) {
             this.priority = priority;
         }
 

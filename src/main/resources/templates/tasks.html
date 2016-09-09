@@ -30,10 +30,10 @@
             <tbody>
             <!--th:class="${row.id == account.id ? 'info' : ''}"-->
             <tr th:each="row,rowStat : ${toDoTasks}" >
-                <td th:text="${row.type}">-</td>
-                <td th:text="${row.priority}">-</td>
+                <td th:text="${row.type.value}">-</td>
+                <td th:text="${row.priority.value}">-</td>
                 <td th:text="${row.state}">-</td>
-                <td th:text="${row.createDate}">-</td>
+                <td th:text="${#dates.format(row.created, 'dd/MM/yyyy HH:mm:SS')}">-</td>
                 <td th:text="${row.assignee.username}">-</td>
                 <td th:text="${row.reporter.username}">-</td>
                 <td th:text="${row.points}">-</td>
@@ -49,81 +49,81 @@
         </table>
     </div>
 
-    <span>IN PROGRESS</span>
-    <div class="collapse in" id="openInProgressTasks">
-        <table class="table table-striped table_accordion">
-            <thead>
-            <tr>
-                <th>Type</th>
-                <th>Priority</th>
-                <th>State</th>
-                <th>Create Date</th>
-                <th>Assignee</th>
-                <th>Reporter</th>
-                <th>Points</th>
-                <th>Summary</th>
-                <th>Description</th>
-            </tr>
-            </thead>
-            <tbody>
-            <!--th:class="${row.id == account.id ? 'info' : ''}"-->
-            <tr th:each="row,rowStat : ${inProgressTasks}" >
-                <td th:text="${row.type}">-</td>
-                <td th:text="${row.priority}">-</td>
-                <td th:text="${row.state}">-</td>
-                <td th:text="${row.createDate}">-</td>
-                <td th:text="${row.assignee.username}">-</td>
-                <td th:text="${row.reporter.username}">-</td>
-                <td th:text="${row.points}">-</td>
-                <td th:text="${row.summary}">-</td>
-                <td th:text="${row.description}">-</td>
-                <!--<td class="last">-->
-                <!--<a class="btn btn-edit btn-sm btn-default" th:href="@{/accounts/edit/__${row.username}__}">Edit</a>-->
-                <!--<a class="btn btn-sm btn-disable-account" th:classappend="${row.enabled == true} ? btn-danger : btn-success"-->
-                <!--th:href="@{/accounts/state/__${row.id}__/__${!row.enabled}__}" th:text="${row.enabled == true ? 'Disable':'Enable'}">Disable</a>-->
-                <!--</td>-->
-            </tr>
-            </tbody>
-        </table>
-    </div>
+    <!--<span>IN PROGRESS</span>-->
+    <!--<div class="collapse in" id="openInProgressTasks">-->
+        <!--<table class="table table-striped table_accordion">-->
+            <!--<thead>-->
+            <!--<tr>-->
+                <!--<th>Type</th>-->
+                <!--<th>Priority</th>-->
+                <!--<th>State</th>-->
+                <!--<th>Create Date</th>-->
+                <!--<th>Assignee</th>-->
+                <!--<th>Reporter</th>-->
+                <!--<th>Points</th>-->
+                <!--<th>Summary</th>-->
+                <!--<th>Description</th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+            <!--&lt;!&ndash;th:class="${row.id == account.id ? 'info' : ''}"&ndash;&gt;-->
+            <!--<tr th:each="row,rowStat : ${inProgressTasks}" >-->
+                <!--<td th:text="${row.type}">-</td>-->
+                <!--<td th:text="${row.priority}">-</td>-->
+                <!--<td th:text="${row.state}">-</td>-->
+                <!--<td th:text="${row.created}">-</td>-->
+                <!--<td th:text="${row.assignee.username}">-</td>-->
+                <!--<td th:text="${row.reporter.username}">-</td>-->
+                <!--<td th:text="${row.points}">-</td>-->
+                <!--<td th:text="${row.summary}">-</td>-->
+                <!--<td th:text="${row.description}">-</td>-->
+                <!--&lt;!&ndash;<td class="last">&ndash;&gt;-->
+                <!--&lt;!&ndash;<a class="btn btn-edit btn-sm btn-default" th:href="@{/accounts/edit/__${row.username}__}">Edit</a>&ndash;&gt;-->
+                <!--&lt;!&ndash;<a class="btn btn-sm btn-disable-account" th:classappend="${row.enabled == true} ? btn-danger : btn-success"&ndash;&gt;-->
+                <!--&lt;!&ndash;th:href="@{/accounts/state/__${row.id}__/__${!row.enabled}__}" th:text="${row.enabled == true ? 'Disable':'Enable'}">Disable</a>&ndash;&gt;-->
+                <!--&lt;!&ndash;</td>&ndash;&gt;-->
+            <!--</tr>-->
+            <!--</tbody>-->
+        <!--</table>-->
+    <!--</div>-->
 
-    <span>DONE</span>
-    <div class="collapse in" id="openDoneTasks">
-        <table class="table table-striped table_accordion">
-            <thead>
-            <tr>
-                <th>Type</th>
-                <th>Priority</th>
-                <th>State</th>
-                <th>Create Date</th>
-                <th>Assignee</th>
-                <th>Reporter</th>
-                <th>Points</th>
-                <th>Summary</th>
-                <th>Description</th>
-            </tr>
-            </thead>
-            <tbody>
-            <!--th:class="${row.id == account.id ? 'info' : ''}"-->
-            <tr th:each="row,rowStat : ${doneTasks}" >
-                <td th:text="${row.type}">-</td>
-                <td th:text="${row.priority}">-</td>
-                <td th:text="${row.state}">-</td>
-                <td th:text="${row.createDate}">-</td>
-                <td th:text="${row.assignee.username}">-</td>
-                <td th:text="${row.reporter.username}">-</td>
-                <td th:text="${row.points}">-</td>
-                <td th:text="${row.summary}">-</td>
-                <td th:text="${row.description}">-</td>
-                <!--<td class="last">-->
-                <!--<a class="btn btn-edit btn-sm btn-default" th:href="@{/accounts/edit/__${row.username}__}">Edit</a>-->
-                <!--<a class="btn btn-sm btn-disable-account" th:classappend="${row.enabled == true} ? btn-danger : btn-success"-->
-                <!--th:href="@{/accounts/state/__${row.id}__/__${!row.enabled}__}" th:text="${row.enabled == true ? 'Disable':'Enable'}">Disable</a>-->
-                <!--</td>-->
-            </tr>
-            </tbody>
-        </table>
-    </div>
+    <!--<span>DONE</span>-->
+    <!--<div class="collapse in" id="openDoneTasks">-->
+        <!--<table class="table table-striped table_accordion">-->
+            <!--<thead>-->
+            <!--<tr>-->
+                <!--<th>Type</th>-->
+                <!--<th>Priority</th>-->
+                <!--<th>State</th>-->
+                <!--<th>Create Date</th>-->
+                <!--<th>Assignee</th>-->
+                <!--<th>Reporter</th>-->
+                <!--<th>Points</th>-->
+                <!--<th>Summary</th>-->
+                <!--<th>Description</th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+            <!--&lt;!&ndash;th:class="${row.id == account.id ? 'info' : ''}"&ndash;&gt;-->
+            <!--<tr th:each="row,rowStat : ${doneTasks}" >-->
+                <!--<td th:text="${row.type}">-</td>-->
+                <!--<td th:text="${row.priority}">-</td>-->
+                <!--<td th:text="${row.state}">-</td>-->
+                <!--<td th:text="${row.createDate}">-</td>-->
+                <!--<td th:text="${row.assignee.username}">-</td>-->
+                <!--<td th:text="${row.reporter.username}">-</td>-->
+                <!--<td th:text="${row.points}">-</td>-->
+                <!--<td th:text="${row.summary}">-</td>-->
+                <!--<td th:text="${row.description}">-</td>-->
+                <!--&lt;!&ndash;<td class="last">&ndash;&gt;-->
+                <!--&lt;!&ndash;<a class="btn btn-edit btn-sm btn-default" th:href="@{/accounts/edit/__${row.username}__}">Edit</a>&ndash;&gt;-->
+                <!--&lt;!&ndash;<a class="btn btn-sm btn-disable-account" th:classappend="${row.enabled == true} ? btn-danger : btn-success"&ndash;&gt;-->
+                <!--&lt;!&ndash;th:href="@{/accounts/state/__${row.id}__/__${!row.enabled}__}" th:text="${row.enabled == true ? 'Disable':'Enable'}">Disable</a>&ndash;&gt;-->
+                <!--&lt;!&ndash;</td>&ndash;&gt;-->
+            <!--</tr>-->
+            <!--</tbody>-->
+        <!--</table>-->
+    <!--</div>-->
 </div>
 </body>
 </html>

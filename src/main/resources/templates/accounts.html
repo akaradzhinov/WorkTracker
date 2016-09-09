@@ -23,8 +23,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="row,rowStat : ${allAccounts}" th:class="${row.id == account.id ? 'info' : ''}">
-                <td th:text="${row.name}">Hi I am the first account ever</td>
+            <tr th:each="row,rowStat : ${allAccounts}">
+                <td th:text="${row.name}">-</td>
                 <td th:text="${row.username}">-</td>
                 <td th:text="${row.email}">-</td>
                 <td th:text="${row.role}">-</td>

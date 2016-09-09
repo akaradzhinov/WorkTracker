@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html layout:decorator="layout">
+<head>
+</head>
+
+<body>
+<span layout:fragment="title" th:text="${type.id > 0 ? type.value : 'Create Type'}">Create Type</span>
+<ol class="breadcrumb" layout:fragment="breadcrumb">
+    <li><a th:href="@{/tasks}">Home</a></li>
+    <li><a th:href="@{/types}">Types</a></li>
+    <li th:if="${type.id > 0}" class="active">Edit</li>
+    <li th:if="${type.id == 0}" class="active">Create</li>
+</ol>
+<div layout:fragment="content" class="results">
+    <form data-toggle="validator" th:action="@{/types/manage}" th:object="${type}" method="post">
+        <div class="border-gray">
+            <input type="hidden" th:field="${type.id}"/>
+
+            <div class="form-group m-5">
+                <label class="control-label l-1" for="value">Value</label><br />
+                <input id="value" class="form-control" type="text" th:required="required" data-minlength="2" data-maxlength="32" th:field="${type.value}"/>
+                <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group m-5">
+                <label class="control-label l-1" for="description">Description</label><br />
+                <textarea id="description" rows="5" class="form-control" type="text" th:required="required" data-minlength="6" data-maxlength="600" th:field="${type.description}"></textarea>
+                <div class="help-block with-errors"></div>
+            </div>
+
+        </div>
+        <br />
+        <!--<button class="btn btn-lg btn-primary">Save</button>-->
+        <button class="btn btn-primary btn-lg" id="createType" th:text="${type.id > 0 ? 'Update':'Create'}">Create</button>
+    </form>
+</div>
+</body>
+</html>

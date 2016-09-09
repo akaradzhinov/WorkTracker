@@ -7,7 +7,6 @@
 <span layout:fragment="title" th:text="${task.id > 0 ? task.summary : 'Create Task'}">Create Task</span>
 <ol class="breadcrumb" layout:fragment="breadcrumb">
     <li><a th:href="@{/tasks}">Home</a></li>
-    <!--<li><a th:href="@{/accounts}">Accounts</a></li>-->
     <li th:if="${task.id > 0}" class="active">View</li>
     <li th:if="${task.id == 0}" class="active">Create</li>
 </ol>
@@ -19,10 +18,9 @@
                 <div class="form-group col-xs-4" style="padding-left: 0px;">
                     <label class="control-label l-1" for="type">Type</label><br />
                     <select id="type" th:field="${task.type}" class="selectpicker">
-                        <option th:each="type : ${T(bg.sofia.tu.enums.Type).values()}"
-                                th:value="${type}"
-                                th:text="${type.getValue()}"
-                                th:style="'color:' + ${type.getColor()} + ';'">
+                        <option th:each="type : ${allTypes}"
+                                th:value="${type.value}"
+                                th:text="${type.value}">
                         </option>
                     </select>
                 </div>
@@ -30,10 +28,9 @@
                 <div class="form-group col-xs-4" style="padding-left: 0px;">
                     <label class="control-label l-1" for="priority">Priority</label><br />
                     <select id="priority" th:field="${task.priority}" class="selectpicker">
-                        <option th:each="priority : ${T(bg.sofia.tu.enums.Priority).values()}"
-                                th:value="${priority}"
-                                th:text="${priority.getValue()}"
-                                th:style="'color:' + ${priority.getColor()} + ';'">
+                        <option th:each="priority : ${allPriorities}"
+                                th:value="${priority.value}"
+                                th:text="${priority.value}">
                         </option>
                     </select>
                 </div>
@@ -47,7 +44,7 @@
 
             <div class="form-group m-5">
                 <label class="control-label l-1" for="description">Description</label><br />
-                <input id="description" class="form-control" type="text" th:required="required" data-minlength="6" data-maxlength="600" th:field="${task.description}"/>
+                <textarea id="description" rows="5" class="form-control" type="text" th:required="required" data-minlength="6" data-maxlength="600" th:field="${task.description}"></textarea>
                 <div class="help-block with-errors"></div>
             </div>
 

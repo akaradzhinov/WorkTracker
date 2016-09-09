@@ -16,34 +16,24 @@ import java.util.Date;
 @Table(name = "accounts")
 public class Account implements java.io.Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(unique = true, nullable = false, length = 32)
     private String username;
 
-    @Column(nullable = false, length = 32)
     private String name;
 
     @JsonIgnore
-    @Column(nullable = false, length = 60)
     private String password;
 
-    @Column(unique = true, nullable = false, length = 32)
     private String email;
 
-    @Column(nullable = false, length = 10)
     private String role;
 
-    @Column(nullable = false)
     private Timestamp created;
 
     private boolean enabled;
 
-    protected Account() {
-
-    }
+    public Account() {}
 
     public Account(String name, String username, String password, String email, String role, boolean enabled) {
         this.name = name;
@@ -51,10 +41,12 @@ public class Account implements java.io.Serializable {
         this.password = password;
         this.email = email;
         this.role = role;
-        this.created = new Timestamp(new Date().getTime());
+        this.created = new Timestamp(System.currentTimeMillis());
         this.enabled = enabled;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public long getId() {
         return id;
     }
@@ -63,6 +55,7 @@ public class Account implements java.io.Serializable {
         this.id = id;
     }
 
+    @Column(unique = true, nullable = false, length = 32)
     public String getUsername() {
         return username;
     }
@@ -71,6 +64,7 @@ public class Account implements java.io.Serializable {
         this.username = username;
     }
 
+    @Column(nullable = false, length = 32)
     public String getName() {
         return name;
     }
@@ -79,6 +73,7 @@ public class Account implements java.io.Serializable {
         this.name = name;
     }
 
+    @Column(nullable = false, length = 60)
     public String getPassword() {
         return password;
     }
@@ -87,6 +82,7 @@ public class Account implements java.io.Serializable {
         this.password = password;
     }
 
+    @Column(nullable = false, length = 10)
     public String getRole() {
         return role;
     }
@@ -95,6 +91,7 @@ public class Account implements java.io.Serializable {
         this.role = role;
     }
 
+    @Column(nullable = false)
     public Timestamp getCreated() {
         return created;
     }
@@ -111,6 +108,7 @@ public class Account implements java.io.Serializable {
         this.enabled = enabled;
     }
 
+    @Column(unique = true, nullable = false, length = 32)
     public String getEmail() {
         return email;
     }

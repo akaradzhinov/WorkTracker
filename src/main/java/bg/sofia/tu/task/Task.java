@@ -1,12 +1,14 @@
 package bg.sofia.tu.task;
 
+import bg.sofia.tu.Comment;
 import bg.sofia.tu.account.Account;
-import bg.sofia.tu.enums.Priority;
 import bg.sofia.tu.enums.State;
-import bg.sofia.tu.enums.Type;
+import bg.sofia.tu.task.priority.Priority;
+import bg.sofia.tu.task.type.Type;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * author: Aleksandar Karadzhinov
@@ -28,7 +30,11 @@ public class Task {
 
     private String description;
 
-    private Date createDate;
+    private Timestamp created;
+
+    private Timestamp updated;
+
+    private Timestamp resolved;
 
     private Account assignee;
 
@@ -37,6 +43,8 @@ public class Task {
     private Priority priority;
 
     private int points;
+
+    private List<Comment> comments;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -48,7 +56,7 @@ public class Task {
         this.id = id;
     }
 
-    @Column(nullable = false)
+    @ManyToOne
     public Type getType() {
         return type;
     }
@@ -85,16 +93,33 @@ public class Task {
     }
 
     @Column(name = "create_date", nullable = false)
-    public Date getCreateDate() {
-        return createDate;
+    public Timestamp getCreated() {
+        return created;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setCreated(Timestamp created) {
+        this.created = created;
     }
 
-    @OneToOne()
-    @JoinColumn(name = "assignee_id", nullable = false)
+    @Column(name = "update_date")
+    public Timestamp getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Timestamp updated) {
+        this.updated = updated;
+    }
+
+    @Column(name = "resolve_date")
+    public Timestamp getResolved() {
+        return resolved;
+    }
+
+    public void setResolved(Timestamp resolved) {
+        this.resolved = resolved;
+    }
+
+    @ManyToOne
     public Account getAssignee() {
         return assignee;
     }
@@ -103,8 +128,7 @@ public class Task {
         this.assignee = assignee;
     }
 
-    @OneToOne()
-    @JoinColumn(name = "reporter_id", nullable = false)
+    @ManyToOne
     public Account getReporter() {
         return reporter;
     }
@@ -113,7 +137,7 @@ public class Task {
         this.reporter = reporter;
     }
 
-    @Column(nullable = false)
+    @ManyToOne
     public Priority getPriority() {
         return priority;
     }
@@ -131,6 +155,15 @@ public class Task {
         this.points = points;
     }
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Task{");
@@ -139,11 +172,14 @@ public class Task {
         sb.append(", state=").append(state);
         sb.append(", summary='").append(summary).append('\'');
         sb.append(", description='").append(description).append('\'');
-        sb.append(", createDate=").append(createDate);
+        sb.append(", created=").append(created);
+        sb.append(", updated=").append(updated);
+        sb.append(", resolved=").append(resolved);
         sb.append(", assignee=").append(assignee);
         sb.append(", reporter=").append(reporter);
         sb.append(", priority=").append(priority);
         sb.append(", points=").append(points);
+        sb.append(", comments=").append(comments);
         sb.append('}');
         return sb.toString();
     }

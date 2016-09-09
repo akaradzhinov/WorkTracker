@@ -35,9 +35,6 @@ class AccountController {
     public String index(Model model) {
         model.addAttribute("allAccounts", getAllAccounts());
 
-        account = new Account();
-        model.addAttribute("account", account);
-
         return "accounts";
     }
 
@@ -64,7 +61,7 @@ class AccountController {
             if(account.getId() > 0) {
                 accountRepository.updateInfo(account.getUsername(), account.getEmail(), account.getRole(), account.getEnabled(), account.getId());
             } else {
-                account.setCreated(new Timestamp(new Date().getTime()));
+                account.setCreated(new Timestamp(System.currentTimeMillis()));
                 accountRepository.save(account);
             }
         } catch (Exception ex) {
@@ -76,7 +73,7 @@ class AccountController {
         return "redirect:/accounts";
     }
 
-    @RequestMapping("edit/{username}")
+    @RequestMapping("/edit/{username}")
     public String edit(@PathVariable String username, Model model) {
         final List<Account> accounts = this.getAllAccounts();
         for (final Account account : accounts) {
@@ -90,7 +87,7 @@ class AccountController {
         return "create_account";
     }
 
-    @RequestMapping("state/{id}/{active}")
+    @RequestMapping("/state/{id}/{active}")
     public String changeState(@PathVariable long id, @PathVariable boolean active, Model model) {
         Account selectedAccount = null;
         final List<Account> accounts = this.getAllAccounts();
@@ -103,7 +100,7 @@ class AccountController {
 
         if(selectedAccount == null) {
             model.addAttribute("globalErrors", Arrays.asList("Could not find account for disabling!"));
-            return "create_account";
+            return "accounts";
         }
 
         selectedAccount.setEnabled(active);

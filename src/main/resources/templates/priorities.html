@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html layout:decorator="layout">
+<head>
+</head>
+
+<body>
+<span layout:fragment="title">Task Priorities</span>
+<ol class="breadcrumb" layout:fragment="breadcrumb">
+    <li><a th:href="@{/tasks}">Home</a></li>
+    <li class="active">Task Priorities</li>
+    <li><a th:href="@{/priorities/create}">Create</a></li>
+</ol>
+<div layout:fragment="content" class="results">
+    <div class="collapse in" id="openPriorities">
+        <table class="table table-striped table_accordion">
+            <thead>
+            <tr>
+                <th>Priority</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="row,rowStat : ${allPriorities}">
+                <td th:text="${row.value}"></td>
+                <td th:text="${row.description}">-</td>
+                <td class="last">
+                    <a class="btn btn-edit btn-sm btn-default" th:href="@{/priorities/edit/__${row.id}__}">Edit</a>
+                    <a class="btn btn-sm btn-danger" th:href="@{/priorities/delete/__${row.id}__}">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
