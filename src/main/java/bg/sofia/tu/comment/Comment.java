@@ -1,4 +1,4 @@
-package bg.sofia.tu;
+package bg.sofia.tu.comment;
 
 import bg.sofia.tu.account.Account;
 import bg.sofia.tu.task.Task;

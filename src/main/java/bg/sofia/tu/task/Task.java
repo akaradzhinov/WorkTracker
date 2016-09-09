@@ -1,6 +1,6 @@
 package bg.sofia.tu.task;
 
-import bg.sofia.tu.Comment;
+import bg.sofia.tu.comment.Comment;
 import bg.sofia.tu.account.Account;
 import bg.sofia.tu.enums.State;
 import bg.sofia.tu.task.priority.Priority;
