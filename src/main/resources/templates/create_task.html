@@ -38,13 +38,13 @@
 
             <div class="form-group m-5">
                 <label class="control-label l-1" for="summary">Summary</label><br />
-                <input id="summary" class="form-control" type="text" th:required="required" data-minlength="6" data-maxlength="128" th:field="${task.summary}"/>
+                <input id="summary" class="form-control" type="text" th:required="required" data-minlength="6" data-maxlength="160" th:field="${task.summary}"/>
                 <div class="help-block with-errors"></div>
             </div>
 
             <div class="form-group m-5">
                 <label class="control-label l-1" for="description">Description</label><br />
-                <textarea id="description" rows="5" class="form-control" type="text" th:required="required" data-minlength="6" data-maxlength="600" th:field="${task.description}"></textarea>
+                <textarea id="description" rows="5" class="form-control" type="text" th:required="required" data-minlength="6" data-maxlength="1000" th:field="${task.description}"></textarea>
                 <div class="help-block with-errors"></div>
             </div>
 

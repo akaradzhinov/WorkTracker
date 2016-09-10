@@ -30,7 +30,7 @@
 
                 <div class="form-group m-5">
                     <label class="control-label l-1" for="email">Email</label><br />
-                    <input id="email" class="form-control" type="text" th:required="required" data-maxlength="32" th:field="${account.email}"/>
+                    <input id="email" class="form-control" type="text" th:required="required" data-minlength="6" data-maxlength="32" th:field="${account.email}"/>
                     <div class="help-block with-errors"></div>
                 </div>
 

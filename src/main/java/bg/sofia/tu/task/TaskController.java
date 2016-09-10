@@ -143,6 +143,13 @@ public class TaskController {
         return "create_task";
     }
 
+    @RequestMapping("/open/{id}")
+    public String view(@PathVariable long id, Model model) {
+        Task currentTask = taskRepository.findOneById(id);
+
+        model.addAttribute("task", currentTask);
+        return "manage_task";
+    }
 
 
     private List<Task> getToDoTasks() {

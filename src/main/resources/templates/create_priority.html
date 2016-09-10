@@ -30,7 +30,7 @@
 
             <div class="form-group m-5">
                 <label class="control-label l-1" for="description">Description</label><br />
-                <textarea id="description" rows="5" class="form-control" type="text" th:required="required" data-minlength="6" data-maxlength="600" th:field="${priority.description}"></textarea>
+                <textarea id="description" rows="5" class="form-control" type="text" th:required="required" data-minlength="6" data-maxlength="128" th:field="${priority.description}"></textarea>
                 <div class="help-block with-errors"></div>
             </div>
 

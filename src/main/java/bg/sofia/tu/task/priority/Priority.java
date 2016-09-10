@@ -38,7 +38,7 @@ public class Priority {
         this.id = id;
     }
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 32)
     public String getValue() {
         return value;
     }
@@ -47,7 +47,7 @@ public class Priority {
         this.value = value;
     }
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 128)
     public String getDescription() {
         return description;
     }

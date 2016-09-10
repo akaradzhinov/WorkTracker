@@ -74,7 +74,7 @@ public class Task {
         this.state = state;
     }
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 160)
     public String getSummary() {
         return summary;
     }
@@ -83,7 +83,7 @@ public class Task {
         this.summary = summary;
     }
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 1000)
     public String getDescription() {
         return description;
     }
