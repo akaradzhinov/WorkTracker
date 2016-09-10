@@ -1,10 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html layout:decorator="layout">
 <head>
-    <meta charset="UTF-8">
-    <title></title>
 </head>
-<body>
 
+<body>
+<span layout:fragment="title">Accounts</span>
+<ol class="breadcrumb" layout:fragment="breadcrumb">
+    <li><a th:href="@{/tasks}">Home</a></li>
+    <li class="active">Accounts</li>
+    <li><a th:href="@{/accounts/create}">Create</a></li>
+</ol>
+<div layout:fragment="content" class="results">
+
+</div>
 </body>
 </html>
