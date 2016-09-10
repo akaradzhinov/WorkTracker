@@ -60,7 +60,7 @@
 
             <div class="form-group m-5">
                 <label class="control-label l-1" for="points">Story Points</label><br />
-                <input id="points" class="form-control" type="text" th:required="required" data-minlength="1" data-maxlength="5" th:field="${task.points}"/>
+                <input id="points" class="form-control" type="number" th:required="required" min="0" th:field="${task.points}"/>
                 <div class="help-block with-errors"></div>
             </div>
         </div>

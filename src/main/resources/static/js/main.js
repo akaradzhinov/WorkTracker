@@ -1,6 +1,28 @@
-/**
- * Created by mgaberov on 1/15/15.
- */
+$('.power').each( function() {
+    var classToAdd=null;
+    switch($(this).find('div').text()) {
+        case '1':
+            classToAdd = 'lowest';
+            break;
+        case '2':
+            classToAdd = 'low';
+            break;
+        case '3':
+            classToAdd = 'medium';
+            break;
+        case '4':
+            classToAdd = 'high';
+            break;
+        case '5':
+            classToAdd = 'highest';
+            break;
+    }
+
+    if( classToAdd !== null ) {
+        $(this).find("span").addClass(classToAdd);
+    }
+} );
+
 /**
  * Click handler for the left navigation - setting an 'active' state on click
  */
@@ -16,29 +38,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
     $('.calendarField').datetimepicker();
 })
 
-/**
- JS for image dialog on marketing page
- */
-function makretingImageDialog() {
-    $('#marketingImageModal').on('show.bs.modal', function (event) {
+$('#toDoTasks div.border-gray').hover(function(){
+    $(this).css('background-color', '#ddd');
+}, function(){
+    $(this).css('background-color', '#ebf2f9');
+});
 
-        var button = $(event.relatedTarget),// Button that triggered the modal
-            url = button.data('url'); // Extract info from data-* attributes
+$('#inProgressTasks div.border-gray').hover(function(){
+    $(this).css('background-color', '#ddd');
+}, function(){
+    $(this).css('background-color', '#ebf2f9');
+});
 
-            if (url) {
-                var startDate   = button.data('startdate'),
-                    expireDate  = button.data('expiredate'),
-                    id          = button.data('id'),
-                    targetUrl   = button.data('linkurl'),
-                    position    = button.data('position'),
-                    modal       = $(this);
-
-                modal.find('.imgId').val(id);
-                modal.find('.imgUrl').val(url);
-                modal.find('.startDate').val(startDate);
-                modal.find('.expireDate').val(expireDate);
-                modal.find('.position').val(position);
-                modal.find('.targetUrl').val(targetUrl);
-            }
-    })
-}
+$('#doneTasks div.border-gray').hover(function(){
+    $(this).css('background-color', '#ddd');
+}, function(){
+    $(this).css('background-color', '#ebf2f9');
+});

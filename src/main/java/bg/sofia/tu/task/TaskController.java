@@ -146,15 +146,15 @@ public class TaskController {
 
 
     private List<Task> getToDoTasks() {
-        return taskRepository.findAllByState(State.TODO);
+        return taskRepository.findAllByStateOrderByPriorityPowerDesc(State.TODO);
     }
 
     private List<Task> getInProgressTasks() {
-        return taskRepository.findAllByState(State.IN_PROGRESS);
+        return taskRepository.findAllByStateOrderByPriorityPowerDesc(State.IN_PROGRESS);
     }
 
     private List<Task> getDoneTasks() {
-        return taskRepository.findAllByState(State.DONE);
+        return taskRepository.findAllByStateOrderByPriorityPowerDesc(State.DONE);
     }
 
 

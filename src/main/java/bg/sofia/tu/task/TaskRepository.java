@@ -18,7 +18,7 @@ import java.util.List;
  */
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
-    List<Task> findAllByState(State state);
+    List<Task> findAllByStateOrderByPriorityPowerDesc(State state);
 
     Task findOneById(Long id);
 

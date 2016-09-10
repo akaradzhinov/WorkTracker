@@ -23,6 +23,12 @@
             </div>
 
             <div class="form-group m-5">
+                <label class="control-label l-1" for="points">Power</label><br />
+                <input id="points" class="form-control" type="number" min="1" max="5" th:required="required" th:field="${priority.power}"/>
+                <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group m-5">
                 <label class="control-label l-1" for="description">Description</label><br />
                 <textarea id="description" rows="5" class="form-control" type="text" th:required="required" data-minlength="6" data-maxlength="600" th:field="${priority.description}"></textarea>
                 <div class="help-block with-errors"></div>

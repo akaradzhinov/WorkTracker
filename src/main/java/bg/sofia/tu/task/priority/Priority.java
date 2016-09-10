@@ -18,11 +18,14 @@ public class Priority {
 
     private String description;
 
+    private int power;
+
     public Priority() {}
 
-    public Priority(String value, String description) {
+    public Priority(String value, String description, int power) {
         this.value = value;
         this.description = description;
+        this.power = power;
     }
 
     @Id
@@ -53,6 +56,13 @@ public class Priority {
         this.description = description;
     }
 
+    public int getPower() {
+        return power;
+    }
+
+    public void setPower(int power) {
+        this.power = power;
+    }
 
     @Override
     public String toString() {
@@ -60,6 +70,7 @@ public class Priority {
         sb.append("id=").append(id);
         sb.append(", value='").append(value).append('\'');
         sb.append(", description='").append(description).append('\'');
+        sb.append(", power=").append(power);
         sb.append('}');
         return sb.toString();
     }

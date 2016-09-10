@@ -16,12 +16,14 @@
             <thead>
             <tr>
                 <th>Priority</th>
+                <th>Power</th>
                 <th>Description</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="row,rowStat : ${allPriorities}">
                 <td th:text="${row.value}"></td>
+                <td th:text="${row.power}"></td>
                 <td th:text="${row.description}">-</td>
                 <td class="last">
                     <a class="btn btn-edit btn-sm btn-default" th:href="@{/priorities/edit/__${row.id}__}">Edit</a>
