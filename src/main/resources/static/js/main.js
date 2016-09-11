@@ -1,3 +1,9 @@
+$(document).ready(function() {
+    if($("#taskWrapper").length > 0) {
+        $("#container").css({ 'display' : 'block'});
+    }
+});
+
 $('.power').each( function() {
     var classToAdd=null;
     switch($(this).find('div').text()) {
@@ -30,13 +36,6 @@ $('#mainnav-menu li').click(function () {
     $('#mainnav-menu li.active-link').removeClass('active-link');
     $(this).addClass('active-link');
 });
-
-/**
- initialize calendar widget
- */
-document.addEventListener("DOMContentLoaded", function(event) {
-    $('.calendarField').datetimepicker();
-})
 
 $('#toDoTasks div.border-gray').hover(function(){
     $(this).css('background-color', '#ddd');

@@ -40,9 +40,9 @@
 <div layout:fragment="modal"></div>
 <div id="container" class="effect mainnav-lg">
     <div th:replace="fragments/header :: header"></div>
-    <div class="boxed">
-        <div th:replace="fragments/content_container :: content"></div>
+    <div id="boxedWrapper" class="boxed">
         <div th:replace="fragments/main_navigation :: mainnav"></div>
+        <div th:replace="fragments/content_container :: content"></div>
     </div>
     <div th:replace="fragments/footer :: footer"></div>
 </div>

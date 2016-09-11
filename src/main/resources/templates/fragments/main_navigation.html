@@ -13,27 +13,21 @@
                                 <span class="menu-title"> Tasks</span>
                             </a>
                         </li>
-                        <div sec:authorize="hasRole('ROLE_ADMIN')">
-                            <li th:attr="class=${#httpServletRequest.getRequestURI().contains('/accounts') ? 'active-link' : ''}">
-                                <a th:href="@{/accounts}">
-                                    <span class="menu-title"> Accounts</span>
-                                </a>
-                            </li>
-                        </div>
-                        <div sec:authorize="hasRole('ROLE_ADMIN')">
-                            <li th:attr="class=${#httpServletRequest.getRequestURI().contains('/types') ? 'active-link' : ''}">
-                                <a th:href="@{/types}">
-                                    <span class="menu-title"> Types</span>
-                                </a>
-                            </li>
-                        </div>
-                        <div sec:authorize="hasRole('ROLE_ADMIN')">
-                            <li th:attr="class=${#httpServletRequest.getRequestURI().contains('/priorities') ? 'active-link' : ''}">
-                                <a th:href="@{/priorities}">
-                                    <span class="menu-title"> Priorities</span>
-                                </a>
-                            </li>
-                        </div>
+                        <li sec:authorize="hasRole('ROLE_ADMIN')" th:attr="class=${#httpServletRequest.getRequestURI().contains('/accounts') ? 'active-link' : ''}">
+                            <a th:href="@{/accounts}">
+                                <span class="menu-title"> Accounts</span>
+                            </a>
+                        </li>
+                        <li sec:authorize="hasRole('ROLE_ADMIN')" th:attr="class=${#httpServletRequest.getRequestURI().contains('/types') ? 'active-link' : ''}">
+                            <a th:href="@{/types}">
+                                <span class="menu-title"> Types</span>
+                            </a>
+                        </li>
+                        <li sec:authorize="hasRole('ROLE_ADMIN')" th:attr="class=${#httpServletRequest.getRequestURI().contains('/priorities') ? 'active-link' : ''}">
+                            <a th:href="@{/priorities}">
+                                <span class="menu-title"> Priorities</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
