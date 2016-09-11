@@ -1,6 +1,9 @@
 $(document).ready(function() {
-    if($("#taskWrapper").length > 0) {
-        $("#container").css({ 'display' : 'block'});
+    if ($(document).height() > $(window).height()) {
+        // scrollbar
+        if($("#taskWrapper").length > 0) {
+            $("#container").css({ 'display' : 'block'});
+        }
     }
 });
 
