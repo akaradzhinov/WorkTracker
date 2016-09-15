@@ -47,6 +47,7 @@ public class TaskController {
         model.addAttribute("toDoTasks", getToDoTasks());
         model.addAttribute("inProgressTasks", getInProgressTasks());
         model.addAttribute("doneTasks", getDoneTasks());
+        model.addAttribute("canceledTasks", getCanceledTasks());
 
         return "tasks";
     }
@@ -164,6 +165,10 @@ public class TaskController {
         return taskRepository.findAllByStateOrderByPriorityPowerDesc(State.DONE);
     }
 
+    private List<Task> getCanceledTasks() {
+        return taskRepository.findAllByStateOrderByPriorityPowerDesc(State.CANCELED);
+    }
+
 
     private List<String> getAccountUsernames() {
         return accountRepository.listAccoutUsernames();
@@ -271,7 +276,7 @@ public class TaskController {
         private long id;
 
         private String state;
-        
+
 
         public long getId() {
             return id;

@@ -65,6 +65,26 @@ $('.task').draggable( {
     revert: true
 } );
 
+$('#canceledTasks').droppable( {
+    drop: function (event, ui) {
+        var state = "CANCELED";
+
+        if(ui.draggable.find('.state').val() != state) {
+            handleTaskDrop(event, ui, state);
+            $(ui.draggable).detach().css({top: 0,left: 0}).appendTo($(this));
+        }
+
+        $('#canceledTasks').removeClass('drop-active');
+    },
+    over: function (event, ui) {
+        $('#canceledTasks').addClass('drop-active');
+    },
+
+    out: function (event, ui) {
+        $('#canceledTasks').removeClass('drop-active');
+    }
+} );
+
 $('#toDoTasks').droppable( {
     drop: function (event, ui) {
         var state = "TODO";

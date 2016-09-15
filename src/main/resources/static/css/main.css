@@ -178,23 +178,30 @@ a.no-decoration:hover {
     display: flex;
 }
 
-#toDoTasks {
+#canceledTasks {
     margin: 0px 4px 0px 0px;
-    width: 33%;
+    width: 28%;
+    padding: 0px;
+    border-radius: 4px;
+}
+
+#toDoTasks {
+    margin: 0px 4px 0px 4px;
+    width: 28%;
     padding: 0px;
     border-radius: 4px;
 }
 
 #inProgressTasks {
     margin: 0px 4px 0px 4px;
-    width: 33%;
+    width: 28%;
     padding: 0px;
     border-radius: 4px;
 }
 
 #doneTasks {
     margin: 0px 0px 0px 4px;
-    width: 33%;
+    width: 28%;
     padding: 0px;
     border-radius: 4px;
 }

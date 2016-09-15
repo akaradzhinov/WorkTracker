@@ -7,5 +7,5 @@ package bg.sofia.tu.enums;
  * created on 06/09/2016 @ 13:46.
  */
 public enum State {
-    TODO, IN_PROGRESS, DONE;
+    CANCELED, TODO, IN_PROGRESS, DONE;
 }

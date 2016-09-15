@@ -26,11 +26,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Value("${admin.username}")
-    private String adminUsername;
-    @Value("${admin.password}")
-    private String adminPassword;
-
     @Autowired
     private DriverManagerDataSource dataStore;
 
@@ -43,9 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-//                .antMatchers("/users/**", "/tournaments/**", "/results/**", "/marketing/**", "/notifications/**", "/mobile_configuration/**").hasRole("ADMIN")
-                .antMatchers("/accounts/**").hasRole("ADMIN")
-//                .antMatchers("/accounts/**").hasRole("USER")
+                .antMatchers("/accounts/**", "/types/**", "/priorities/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
 
                 .and()

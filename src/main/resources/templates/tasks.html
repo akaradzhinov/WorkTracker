@@ -12,6 +12,36 @@
 </ol>
 <div layout:fragment="content" class="results">
     <div id="taskWrapper" class="row stack-over">
+        <div id="canceledTasks" class="col-md-4 grey-style container-fluid draggable-container stack-over">
+            <h2 class="text-center">Canceled</h2>
+            <div th:each="task : ${canceledTasks}" class="task">
+                <a class="no-decoration" th:href="@{/tasks/view/__${task.id}__}">
+                    <input type="hidden" class="task-id" th:value="${task.id}">
+                    <input type="hidden" class="csrf" th:value="${_csrf.token}">
+                    <input type="hidden" class="state" th:value="${task.state}">
+                    <div class="border-gray background-styled hover">
+                        <div style="margin-top: 5px;" class="row no-margin">
+                            <div class="col-md-2">
+                                <span title="task id" class="id" th:text="${'TM-' + task.id}">-</span>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <span title="task type" class="type" th:text="${task.type.value}">-</span>
+                            </div>
+                            <div class="col-md-2 text-center power">
+                                <div style="display:none;" th:text="${task.priority.power}"></div>
+                                <span title="task priority" th:text="${task.priority.value}">-</span>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <span title="task reporter" class="reporter" th:text="${task.reporter.username}">-</span>
+                            </div>
+                        </div>
+                        <div class="row no-margin summary">
+                            <span title="task summary" th:text="${task.summary}">-</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
         <div id="toDoTasks" class="col-md-4 grey-style container-fluid draggable-container stack-over">
             <h2 class="text-center">To Do</h2>
             <div th:each="task : ${toDoTasks}" class="task">
