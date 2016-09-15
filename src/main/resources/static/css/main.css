@@ -285,4 +285,8 @@ html, body, #container {
     display: flex;
     flex-direction: column;
 }
+
+.drop-active {
+    border: 1.5px solid #ccc;
+}
 /* Common END */

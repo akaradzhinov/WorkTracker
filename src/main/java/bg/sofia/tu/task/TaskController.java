@@ -13,10 +13,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.util.Arrays;
@@ -128,10 +125,13 @@ public class TaskController {
         return "create_task";
     }
 
-    @RequestMapping(value = "/update/state/{id}/{value}/")
-    public String updateState(@PathVariable long id, @PathVariable State state, Model model) {
-        Task currentTask = taskRepository.findOneById(id);
-        currentTask.setState(state);
+    @RequestMapping(value = "/update/state")
+    public String updateState(@RequestBody UpdateStateRequest updateStateRequest, Model model) {
+        System.out.println();
+        System.out.println(updateStateRequest.toString());
+        System.out.println();
+        Task currentTask = taskRepository.findOneById(updateStateRequest.getId());
+        currentTask.setState(State.valueOf(updateStateRequest.getState()));
 
         try {
             taskRepository.save(currentTask);
@@ -140,7 +140,7 @@ public class TaskController {
             model.addAttribute("globalErrors", Arrays.asList("Could not update task state!"));
         }
 
-        return "create_task";
+        return "tasks";
     }
 
     @RequestMapping("/view/{id}")
@@ -262,6 +262,38 @@ public class TaskController {
             sb.append(", assignee='").append(assignee).append('\'');
             sb.append(", priority=").append(priority);
             sb.append(", points=").append(points);
+            sb.append('}');
+            return sb.toString();
+        }
+    }
+
+    public static class UpdateStateRequest {
+        private long id;
+
+        private String state;
+        
+
+        public long getId() {
+            return id;
+        }
+
+        public void setId(long id) {
+            this.id = id;
+        }
+
+        public String getState() {
+            return state;
+        }
+
+        public void setState(String state) {
+            this.state = state;
+        }
+
+        @Override
+        public String toString() {
+            final StringBuilder sb = new StringBuilder("UpdateStateRequest{");
+            sb.append("id=").append(id);
+            sb.append(", state='").append(state).append('\'');
             sb.append('}');
             return sb.toString();
         }

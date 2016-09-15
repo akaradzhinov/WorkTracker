@@ -57,3 +57,98 @@ $('#doneTasks div.border-gray').hover(function(){
 }, function(){
     $(this).css('background-color', '#ebf2f9');
 });
+
+$('.task').draggable( {
+    containment: '#content-container',
+    cursor: 'move',
+    stack: '.task',
+    revert: true
+} );
+
+$('#toDoTasks').droppable( {
+    drop: function (event, ui) {
+        var state = "TODO";
+
+        if(ui.draggable.find('.state').val() != state) {
+            handleTaskDrop(event, ui, state);
+            $(ui.draggable).detach().css({top: 0,left: 0}).appendTo($(this));
+        }
+
+        $('#toDoTasks').removeClass('drop-active');
+    },
+    over: function (event, ui) {
+        $('#toDoTasks').addClass('drop-active');
+    },
+
+    out: function (event, ui) {
+        $('#toDoTasks').removeClass('drop-active');
+    }
+} );
+
+$('#inProgressTasks').droppable( {
+    drop: function (event, ui) {
+        var state = "IN_PROGRESS";
+
+        if(ui.draggable.find('.state').val() != state) {
+            handleTaskDrop(event, ui, state);
+            $(ui.draggable).detach().css({top: 0,left: 0}).appendTo($(this));
+        }
+
+        $('#inProgressTasks').removeClass('drop-active');
+    },
+    over: function (event, ui) {
+        $('#inProgressTasks').addClass('drop-active');
+    },
+
+    out: function (event, ui) {
+        $('#inProgressTasks').removeClass('drop-active');
+    }
+} );
+
+$('#doneTasks').droppable( {
+    drop: function (event, ui) {
+        var state = "DONE";
+
+        if(ui.draggable.find('.state').val() != state) {
+            handleTaskDrop(event, ui, state);
+            $(ui.draggable).detach().css({top: 0,left: 0}).appendTo($(this));
+        }
+
+        $('#doneTasks').removeClass('drop-active');
+    },
+    over: function (event, ui) {
+        $('#doneTasks').addClass('drop-active');
+    },
+
+    out: function (event, ui) {
+        $('#doneTasks').removeClass('drop-active');
+    }
+} );
+
+function handleTaskDrop( event, ui, state ) {
+    var hasError = false;
+
+    var data = {
+        "id": parseInt(ui.draggable.find('.task-id').val()),
+        "state": state
+    };
+
+    $.ajax({
+        type: "POST",
+        url: "/tasks/update/state",
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        async: false,
+        headers : {
+            "X-CSRF-TOKEN": ui.draggable.find('.csrf').val()
+        },
+        success: function() {
+            //ui.draggable.draggable( 'option', 'revert', false );
+            //ui.draggable.find('.state').val(state);
+            window.location.reload();
+        },
+        error: function() {
+            hasError = true;
+        }
+    });
+}
