@@ -17,25 +17,101 @@
     </div>
     <hr>
 
-
     <div id="manage-task" class="row">
-        <a href="#" id="task-type" data-type="select2" data-pk="1" data-value="Task" data-title="Select type" th:text="${task.type.value}"
-            th:attr="data-url='/tasks/update/type/' + ${task.id}">Select Type</a>
+        <div id="taks-left" class="col-md-8">
+            <button type="button" class="btn btn-info collapse-div" data-toggle="collapse" data-target="#task-details">Details</button>
+            <div id="task-details" class="collapse in">
 
-        <a href="#" id="task-priority" data-type="select2" data-pk="1" data-value="Task" data-title="Select priority" th:text="${task.priority.value}"
-           th:attr="data-url='/tasks/update/priority/' + ${task.id}">Select Priority</a>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label class="control-label col-md-3" for="task-type">Type: </label>
+                        <a class="col-md-9 type" href="#" id="task-type" data-type="select2" data-pk="1" data-value="Task" data-title="Select type" th:text="${task.type.value}"
+                           th:attr="data-url='/tasks/update/type/' + ${task.id}">Select Type</a>
+                    </div>
 
-        <a href="#" id="task-state" data-type="select2" data-pk="1" data-value="Task" data-title="Select state" th:text="${task.state}"
-           th:attr="data-url='/tasks/update/state/' + ${task.id}">Select State</a>
+                    <div class="form-group col-md-6">
+                        <label class="control-label col-md-3" for="task-state">State: </label>
+                        <a class="col-md-9 task-button" href="#" id="task-state" data-type="select2" data-pk="1" data-value="TO DO" data-title="Select state" th:text="${task.state}"
+                           th:attr="data-url='/tasks/update/state/' + ${task.id}">Select State</a>
+                    </div>
+                </div>
 
-        <a href="#" id="task-assignee" data-type="select2" data-pk="1" data-value="Task" data-title="Select assignee" th:text="${task.assignee.username}"
-           th:attr="data-url='/tasks/update/assignee/' + ${task.id}">Select Assignee</a>
+                <div class="row">
+                    <div class="form-group col-md-6 power">
+                        <div style="display:none;" th:text="${task.priority.power}"></div>
+                        <label class="control-label col-md-3" for="task-priority">Priority: </label>
+                        <a class="col-md-9 " href="#" id="task-priority" data-type="select2" data-pk="1" data-value="Highest" data-title="Select priority" th:text="${task.priority.value}"
+                           th:attr="data-url='/tasks/update/priority/' + ${task.id}">Select Priority</a>
+                    </div>
 
-        <a href="#" id="task-resolution" data-type="select2" data-pk="1" data-value="Task" data-title="Select resolution" th:text="${task.resolution.value}"
-           th:attr="data-url='/tasks/update/resolution/' + ${task.id}">Select Resolution</a>
+                    <div class="form-group col-md-6">
+                        <label class="control-label col-md-3" for="task-resolution">Resolution: </label>
+                        <a class="col-md-9 task-button" href="#" id="task-resolution" data-type="select2" data-pk="1" data-value="Unresolved" data-title="Select resolution" th:text="${task.resolution.value}"
+                           th:attr="data-url='/tasks/update/resolution/' + ${task.id}">Select Resolution</a>
+                    </div>
+                </div>
+            </div>
 
-        <!--<a href="#" id="task-time-worked" data-type="select2" data-pk="1" data-value="Task" data-title="Select type" th:text="${task.type.value}"-->
-           <!--th:attr="data-url='/tasks/update/worked/' + ${task.id}">Task</a>-->
+            <button type="button" class="btn btn-info collapse-div" data-toggle="collapse" data-target="#description">Description</button>
+            <div id="description" class="collapse in description-border col-md-12">
+                <a class="col-md-12 no-decoration" href="#" id="task-description" data-type="textarea" data-pk="1" th:text="${task.description}"
+                   th:attr="data-url='/tasks/update/description/' + ${task.id}">Add description</a>
+            </div>
+        </div>
+
+        <div id="task-right" class="col-md-4">
+            <button type="button" class="btn btn-info collapse-div" data-toggle="collapse" data-target="#task-people">People</button>
+            <div id="task-people" class="collapse in">
+                <div class="form-group col-md-12 people">
+                    <label class="control-label col-md-3" for="task-reporter">Reporter: </label>
+                    <span id="task-reporter" class="col-md-9 reporter" th:text="${task.reporter.username}">-</span>
+                </div>
+
+                <div class="form-group col-md-12 people">
+                    <label class="control-label col-md-3" for="task-assignee">Assignee: </label>
+                    <a class="col-md-9" href="#" id="task-assignee" data-type="select2" data-pk="1" data-value="Task" data-title="Select assignee" th:text="${task.assignee.username}"
+                       th:attr="data-url='/tasks/update/assignee/' + ${task.id}">Select Assignee</a>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-info collapse-div" data-toggle="collapse" data-target="#task-dates">Dates</button>
+            <div id="task-dates" class="collapse in">
+                <div class="form-group col-md-12 people">
+                    <label class="control-label col-md-3" for="task-created">Created: </label>
+                    <span id="task-created" class="col-md-9" th:text="${#dates.format(task.created, 'dd/MM/yyyy HH:mm:SS')}">-</span>
+                </div>
+
+                <div class="form-group col-md-12 people">
+                    <label class="control-label col-md-3" for="task-updated">Updated: </label>
+                    <span id="task-updated" class="col-md-9"
+                      th:text="${task.updated == null ? 'Not Updated' : #dates.format(task.updated, 'dd/MM/yyyy HH:mm:SS')}">Not Updated</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button type="button" class="btn btn-info collapse-div" data-toggle="collapse" data-target="#task-comments">Comments</button>
+    <div id="task-comments" class="collapse in description-border col-md-12">
+        <div th:each="comment : ${task.comments}">
+            <div id="comment-content">
+                <div class="row">
+                    <button type="button" class="btn btn-default dropdown-toggle button-size col-md-1" data-toggle="collapse"
+                            th:attr="data-target='#comment-text' + ${comment.id}" >
+                        <span id="caret" class="caret"></span>
+                    </button>
+
+                    <span id="comment-user" class="col-md-2"
+                      th:text="${comment.user.name + ' (' + comment.user.username + ') '}">-</span>
+
+                    <span class="col-md-8 padding-l-5"
+                       th:text="${'added a comment - ' + #dates.format(comment.time, 'dd/MM/yyyy HH:mm:SS')}">-</span>
+                </div>
+                <div th:attr="id='comment-text' + ${comment.id}" class="collapse in comment-text">
+                    <span class="col-md-12" th:text="${comment.message}">-</span>
+                    <hr>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>

@@ -11,6 +11,9 @@ $(document).ready(function() {
             headers: {
                 "X-CSRF-TOKEN": $('.csrf').val()
             }
+        },
+        success: function(response, newValue) {
+            if(response.status != 'error') window.location.reload(); //msg will be shown in editable form
         }
     });
 
@@ -24,6 +27,9 @@ $(document).ready(function() {
             headers: {
                 "X-CSRF-TOKEN": $('.csrf').val()
             }
+        },
+        success: function(response, newValue) {
+            if(response.status != 'error') window.location.reload(); //msg will be shown in editable form
         }
     });
 
@@ -37,6 +43,9 @@ $(document).ready(function() {
             headers: {
                 "X-CSRF-TOKEN": $('.csrf').val()
             }
+        },
+        success: function(response, newValue) {
+            if(response.status != 'error') window.location.reload(); //msg will be shown in editable form
         }
     });
 
@@ -55,6 +64,9 @@ $(document).ready(function() {
             headers: {
                 "X-CSRF-TOKEN": $('.csrf').val()
             }
+        },
+        success: function(response, newValue) {
+            if(response.status != 'error') window.location.reload(); //msg will be shown in editable form
         }
     });
 
@@ -68,6 +80,36 @@ $(document).ready(function() {
             headers: {
                 "X-CSRF-TOKEN": $('.csrf').val()
             }
+        },
+        success: function(response, newValue) {
+            if(response.status != 'error') window.location.reload(); //msg will be shown in editable form
+        }
+    });
+
+    $('#task-description').on('shown', function(e, editable) {
+        $('#description').removeClass('description-border');
+        $('.editable-input').addClass('width-100');
+    });
+
+    $('#task-description').on('hidden', function(e, reason) {
+        $('#description').addClass('description-border');
+        $('.editable-input').removeClass('width-100');
+    });
+
+    $('#task-description').editable({
+        title: 'Add description',
+        rows: 10,
+        escape: true,
+        placeholder: 'Add Description',
+        mode: 'inline',
+        width: 200,
+        ajaxOptions: {
+            headers: {
+                "X-CSRF-TOKEN": $('.csrf').val()
+            }
+        },
+        success: function(response, newValue) {
+            if(response.status != 'error') window.location.reload(); //msg will be shown in editable form
         }
     });
 
@@ -76,17 +118,37 @@ $(document).ready(function() {
     $('#task-state').removeClass('editable-click');
     $('#task-assignee').removeClass('editable-click');
     $('#task-resolution').removeClass('editable-click');
+    $('#task-description').removeClass('editable-click');
+    $('#task-description').removeClass('form-inline');
     $('#task-time-worked').removeClass('editable-click');
 
+    updateOverlappingDivs();
 
-
-    if ($(document).height() > $(window).height()) {
-        // scrollbar
-        if($("#taskWrapper").length > 0) {
-            $("#container").css({ 'display' : 'block'});
-        }
-    }
 });
+
+$('#page-content').click(function(e) {
+    updateOverlappingDivs();
+});
+
+function updateOverlappingDivs() {
+    var footer = document.getElementById('footer').getBoundingClientRect();
+
+    if ($("#taskWrapper").length > 0) {
+        checkForOverlapAndUpdate(footer);
+    }
+
+    if ($('#manage-task').length > 0) {
+        checkForOverlapAndUpdate(footer);
+    }
+}
+
+function checkForOverlapAndUpdate(footer) {
+    var content = document.getElementById('page-content').getBoundingClientRect();
+
+    if (!(content.right < footer.left || content.left > footer.right || content.bottom < footer.top || content.top > footer.bottom)) {
+        $("#container").css({'display': 'block'});
+    }
+}
 
 $('.power').each( function() {
     var classToAdd=null;
@@ -110,6 +172,7 @@ $('.power').each( function() {
 
     if( classToAdd !== null ) {
         $(this).find("span").addClass(classToAdd);
+        $(this).find("a").addClass(classToAdd);
     }
 } );
 

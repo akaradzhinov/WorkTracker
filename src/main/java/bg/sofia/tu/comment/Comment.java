@@ -47,7 +47,7 @@ public class Comment {
     }
 
     @OneToOne()
-    @JoinColumn(name = "assignee_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     public Account getUser() {
         return user;
     }

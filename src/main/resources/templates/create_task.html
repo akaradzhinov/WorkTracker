@@ -34,6 +34,16 @@
                         </option>
                     </select>
                 </div>
+
+                <div class="form-group col-xs-4" style="padding-left: 0px;">
+                    <label class="control-label l-1" for="resolution">Resolution</label><br />
+                    <select id="resolution" th:field="${task.resolution}" class="selectpicker">
+                        <option th:each="resolution : ${allResolution}"
+                                th:value="${resolution.value}"
+                                th:text="${resolution.value}">
+                        </option>
+                    </select>
+                </div>
             </div>
 
             <div class="form-group m-5">

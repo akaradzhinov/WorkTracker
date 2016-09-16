@@ -218,7 +218,7 @@ a.no-decoration:hover {
     margin: 10px 15px 5px 15px;
 }
 
-.high, .highest, .medium, .low, .lowest, .type, .reporter {
+.high, .highest, .medium, .low, .lowest, .type, .reporter, .task-button {
     border-radius: 4px;
     font-weight: bold;
     padding: 2px 5px;
@@ -240,42 +240,56 @@ a.no-decoration:hover {
     background-color: #ebf2f9;
     border: 1px solid #333;
     text-transform: none;
+    width: auto;
 }
 
 .type {
     color: #fff;
     background-color: #5bc0de;
     border: 1px solid #46b8da;
+    width: auto;
 }
 
 .low {
     background-color: #5cb85c;
     border: 1px solid #4cae4c;
     color: #fff;
+    width: auto;
 }
 
 .lowest {
     background-color: #337ab7;
     border: 1px solid #2e6da4;
     color: #fff;
+    width: auto;
 }
 
 .medium {
     background-color: #eddc1f;
     border: 1px solid #e1bb18;
     color: #fff;
+    width: auto;
 }
 
 .high {
     background-color: #f0ad4e;
     border: 1px solid #eea236;
     color: #fff;
+    width: auto;
 }
 
 .highest {
     background-color: #d9534f;
     border: 1px solid #d43f3a;
     color: #fff;
+    width: auto;
+}
+
+.task-button {
+    background-color: #5cb85c;
+    border: 1px solid #4cae4c;
+    color: #fff;
+    width: auto;
 }
 
 * {
@@ -301,7 +315,7 @@ html, body, #container {
 }
 
 #manage-task {
-    margin: 40px 0 20px;
+    margin-bottom: 0px;
 }
 
 #task-title {
@@ -317,4 +331,82 @@ html, body, #container {
     margin-left: 10px;
 }
 
+.collapse-div {
+    margin-bottom: 10px;
+}
+
+.collapse {
+    margin-bottom: 10px;
+}
+
+.people {
+    padding-left: 0px;
+}
+
+.editableform .form-control {
+    width: 100%;
+}
+
+.control-group {
+    width: 100%;
+}
+
+.width-100 {
+    width: 100%;
+}
+
+.editable-container.editable-inline {
+    width: 95%;
+}
+
+#description {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.description-border {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#manage-task {
+    display: flex;
+}
+
+#task-description {
+    padding: 5px 10px 10px 10px;
+}
+
+.button-size {
+    width: 0px;
+    height: 20px;
+}
+
+#caret {
+    position: absolute;
+    padding-left: 0px;
+    margin-left: -4px;
+}
+
+#comment-user {
+    color: #337ab7;
+    border-radius: 0;
+    border-color: transparent;
+    font-weight: bold;
+    width: auto;
+    padding-right: 0;
+}
+
+.padding-l-5 {
+    padding-left: 5px;
+}
+
+.comment-text {
+    padding-top: 5px;
+}
+
+#page-content {
+    display: flex;
+    flex-direction: column;
+}
 /* Common END */

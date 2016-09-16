@@ -62,6 +62,7 @@ public class TaskController {
         model.addAttribute("allAccountUsernames", getAccountUsernames());
         model.addAttribute("allTypes", typeRepository.findAll());
         model.addAttribute("allPriorities", priorityRepository.findAll());
+        model.addAttribute("allResolution", resolutionRepository.findAll());
 
         model.addAttribute("task", new TaskRequest());
 
@@ -105,6 +106,7 @@ public class TaskController {
         Priority prior = priorityRepository.findOneByValue(value);
         Task currentTask = taskRepository.findOneById(id);
         currentTask.setPriority(prior);
+        currentTask.setUpdated(new Timestamp(System.currentTimeMillis()));
 
         try {
             taskRepository.save(currentTask);
@@ -122,6 +124,7 @@ public class TaskController {
         Type type = typeRepository.findOneByValue(value);
         Task currentTask = taskRepository.findOneById(id);
         currentTask.setType(type);
+        currentTask.setUpdated(new Timestamp(System.currentTimeMillis()));
 
         try {
             taskRepository.save(currentTask);
@@ -138,6 +141,7 @@ public class TaskController {
     public String updateStateById(@PathVariable long id, @RequestParam(value = "value") String value, Model model) {
         Task currentTask = taskRepository.findOneById(id);
         currentTask.setState(State.valueOf(value.trim().replace(" ", "_")));
+        currentTask.setUpdated(new Timestamp(System.currentTimeMillis()));
 
         try {
             taskRepository.save(currentTask);
@@ -155,6 +159,7 @@ public class TaskController {
         Account account = accountRepository.findOneByUsername(value);
         Task currentTask = taskRepository.findOneById(id);
         currentTask.setAssignee(account);
+        currentTask.setUpdated(new Timestamp(System.currentTimeMillis()));
 
         try {
             taskRepository.save(currentTask);
@@ -172,6 +177,7 @@ public class TaskController {
         Resolution resolution = resolutionRepository.findOneByValue(value);
         Task currentTask = taskRepository.findOneById(id);
         currentTask.setResolution(resolution);
+        currentTask.setUpdated(new Timestamp(System.currentTimeMillis()));
 
         try {
             taskRepository.save(currentTask);
@@ -183,27 +189,29 @@ public class TaskController {
         return "success";
     }
 
-//    @RequestMapping(value = "/update/assignee/{id}")
-//    @ResponseBody
-//    public String updateTimeWorkedById(@PathVariable long id, @RequestParam(value = "value") String value, Model model) {
-//        Task currentTask = taskRepository.findOneById(id);
-//        currentTask.setAssignee(account);
-//
-//        try {
-//            taskRepository.save(currentTask);
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//            model.addAttribute("globalErrors", Arrays.asList("Could not update task type!"));
-//        }
-//
-//        return "success";
-//    }
+    @RequestMapping(value = "/update/description/{id}")
+    @ResponseBody
+    public String updateDescriptionById(@PathVariable long id, @RequestParam(value = "value") String value, Model model) {
+        Task currentTask = taskRepository.findOneById(id);
+        currentTask.setDescription(value);
+        currentTask.setUpdated(new Timestamp(System.currentTimeMillis()));
+
+        try {
+            taskRepository.save(currentTask);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            model.addAttribute("globalErrors", Arrays.asList("Could not update task resolution!"));
+        }
+
+        return "success";
+    }
 
     @RequestMapping(value = "/update/state")
     @ResponseBody
     public String updateState(@RequestBody UpdateStateRequest updateStateRequest, Model model) {
         Task currentTask = taskRepository.findOneById(updateStateRequest.getId());
         currentTask.setState(State.valueOf(updateStateRequest.getState()));
+        currentTask.setUpdated(new Timestamp(System.currentTimeMillis()));
 
         try {
             taskRepository.save(currentTask);
@@ -273,6 +281,8 @@ public class TaskController {
 
         private String priority;
 
+        private String resolution;
+
         private int points;
 
 
@@ -324,6 +334,14 @@ public class TaskController {
             this.priority = priority;
         }
 
+        public String getResolution() {
+            return resolution;
+        }
+
+        public void setResolution(String resolution) {
+            this.resolution = resolution;
+        }
+
         public int getPoints() {
             return points;
         }
@@ -336,11 +354,12 @@ public class TaskController {
         public String toString() {
             final StringBuilder sb = new StringBuilder("TaskRequest{");
             sb.append("id=").append(id);
-            sb.append(", type=").append(type);
+            sb.append(", type='").append(type).append('\'');
             sb.append(", summary='").append(summary).append('\'');
             sb.append(", description='").append(description).append('\'');
             sb.append(", assignee='").append(assignee).append('\'');
-            sb.append(", priority=").append(priority);
+            sb.append(", priority='").append(priority).append('\'');
+            sb.append(", resolution='").append(resolution).append('\'');
             sb.append(", points=").append(points);
             sb.append('}');
             return sb.toString();
