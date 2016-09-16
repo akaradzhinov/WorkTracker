@@ -28,6 +28,11 @@
                                 <span class="menu-title"> Priorities</span>
                             </a>
                         </li>
+                        <li sec:authorize="hasRole('ROLE_ADMIN')" th:attr="class=${#httpServletRequest.getRequestURI().contains('/resolutions') ? 'active-link' : ''}">
+                            <a th:href="@{/resolutions}">
+                                <span class="menu-title"> Resolutions</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>

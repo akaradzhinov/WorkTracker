@@ -4,26 +4,35 @@
 </head>
 
 <body>
-<span layout:fragment="title">Accounts</span>
+<span layout:fragment="title">Manage Task</span>
 <ol class="breadcrumb" layout:fragment="breadcrumb">
     <li><a th:href="@{/tasks}">Home</a></li>
     <li class="active">Manage</li>
 </ol>
 <div layout:fragment="content" class="results">
     <input type="hidden" class="csrf" th:value="${_csrf.token}">
+    <div id="task-title" class="row">
+        <h3 id="task-id" class="id col-md-1" th:text="'TM-' + ${task.id} + ': '"></h3>
+        <h3 id="task-summary" th:text="${task.summary}"></h3>
+    </div>
+    <hr>
 
-    <div class="row manage-task">
+
+    <div id="manage-task" class="row">
         <a href="#" id="task-type" data-type="select2" data-pk="1" data-value="Task" data-title="Select type" th:text="${task.type.value}"
             th:attr="data-url='/tasks/update/type/' + ${task.id}">Select Type</a>
 
-        <a href="#" id="task-priority" data-type="select2" data-pk="1" data-value="Task" data-title="Select type" th:text="${task.priority.value}"
+        <a href="#" id="task-priority" data-type="select2" data-pk="1" data-value="Task" data-title="Select priority" th:text="${task.priority.value}"
            th:attr="data-url='/tasks/update/priority/' + ${task.id}">Select Priority</a>
 
-        <a href="#" id="task-state" data-type="select2" data-pk="1" data-value="Task" data-title="Select type" th:text="${task.state}"
+        <a href="#" id="task-state" data-type="select2" data-pk="1" data-value="Task" data-title="Select state" th:text="${task.state}"
            th:attr="data-url='/tasks/update/state/' + ${task.id}">Select State</a>
 
-        <a href="#" id="task-assignee" data-type="select2" data-pk="1" data-value="Task" data-title="Select type" th:text="${task.assignee.username}"
+        <a href="#" id="task-assignee" data-type="select2" data-pk="1" data-value="Task" data-title="Select assignee" th:text="${task.assignee.username}"
            th:attr="data-url='/tasks/update/assignee/' + ${task.id}">Select Assignee</a>
+
+        <a href="#" id="task-resolution" data-type="select2" data-pk="1" data-value="Task" data-title="Select resolution" th:text="${task.resolution.value}"
+           th:attr="data-url='/tasks/update/resolution/' + ${task.id}">Select Resolution</a>
 
         <!--<a href="#" id="task-time-worked" data-type="select2" data-pk="1" data-value="Task" data-title="Select type" th:text="${task.type.value}"-->
            <!--th:attr="data-url='/tasks/update/worked/' + ${task.id}">Task</a>-->

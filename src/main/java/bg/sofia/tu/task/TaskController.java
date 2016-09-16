@@ -5,6 +5,8 @@ import bg.sofia.tu.account.AccountRepository;
 import bg.sofia.tu.enums.State;
 import bg.sofia.tu.task.priority.Priority;
 import bg.sofia.tu.task.priority.PriorityRepository;
+import bg.sofia.tu.task.resolution.Resolution;
+import bg.sofia.tu.task.resolution.ResolutionRepository;
 import bg.sofia.tu.task.type.Type;
 import bg.sofia.tu.task.type.TypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +42,9 @@ public class TaskController {
 
     @Autowired
     private PriorityRepository priorityRepository;
+
+    @Autowired
+    private ResolutionRepository resolutionRepository;
 
 
     @RequestMapping
@@ -138,7 +143,7 @@ public class TaskController {
             taskRepository.save(currentTask);
         } catch (Exception ex) {
             ex.printStackTrace();
-            model.addAttribute("globalErrors", Arrays.asList("Could not update task type!"));
+            model.addAttribute("globalErrors", Arrays.asList("Could not update task state!"));
         }
 
         return "success";
@@ -155,7 +160,24 @@ public class TaskController {
             taskRepository.save(currentTask);
         } catch (Exception ex) {
             ex.printStackTrace();
-            model.addAttribute("globalErrors", Arrays.asList("Could not update task type!"));
+            model.addAttribute("globalErrors", Arrays.asList("Could not update task assignee!"));
+        }
+
+        return "success";
+    }
+
+    @RequestMapping(value = "/update/resolution/{id}")
+    @ResponseBody
+    public String updateResolutionById(@PathVariable long id, @RequestParam(value = "value") String value, Model model) {
+        Resolution resolution = resolutionRepository.findOneByValue(value);
+        Task currentTask = taskRepository.findOneById(id);
+        currentTask.setResolution(resolution);
+
+        try {
+            taskRepository.save(currentTask);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            model.addAttribute("globalErrors", Arrays.asList("Could not update task resolution!"));
         }
 
         return "success";

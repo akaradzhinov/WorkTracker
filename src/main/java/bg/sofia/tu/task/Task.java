@@ -4,6 +4,7 @@ import bg.sofia.tu.comment.Comment;
 import bg.sofia.tu.account.Account;
 import bg.sofia.tu.enums.State;
 import bg.sofia.tu.task.priority.Priority;
+import bg.sofia.tu.task.resolution.Resolution;
 import bg.sofia.tu.task.type.Type;
 
 import javax.persistence.*;
@@ -45,6 +46,8 @@ public class Task {
     private int points;
 
     private List<Comment> comments;
+
+    private Resolution resolution;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -164,6 +167,15 @@ public class Task {
         this.comments = comments;
     }
 
+    @ManyToOne
+    public Resolution getResolution() {
+        return resolution;
+    }
+
+    public void setResolution(Resolution resolution) {
+        this.resolution = resolution;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Task{");
@@ -180,6 +192,7 @@ public class Task {
         sb.append(", priority=").append(priority);
         sb.append(", points=").append(points);
         sb.append(", comments=").append(comments);
+        sb.append(", resolution=").append(resolution);
         sb.append('}');
         return sb.toString();
     }

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html layout:decorator="layout">
+<head>
+</head>
+
+<body>
+<span layout:fragment="title">Task Resolutions</span>
+<ol class="breadcrumb" layout:fragment="breadcrumb">
+    <li><a th:href="@{/tasks}">Home</a></li>
+    <li class="active">Resolutions</li>
+    <li><a th:href="@{/resolutions/create}">Create</a></li>
+</ol>
+<div layout:fragment="content" class="results">
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Resolution</th>
+                <th>Power</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="row,rowStat : ${allResolutions}">
+                <td th:text="${row.value}"></td>
+                <td th:text="${row.description}">-</td>
+                <td class="last">
+                    <a class="btn btn-edit btn-sm btn-default" th:href="@{/resolutions/edit/__${row.id}__}">Edit</a>
+                    <a class="btn btn-sm btn-danger" th:href="@{/resolutions/delete/__${row.id}__}">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

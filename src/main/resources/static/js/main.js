@@ -5,8 +5,7 @@ $(document).ready(function() {
         source: '/types/getForSelect',
         select2: {
             width: 200,
-            placeholder: 'Select type',
-            allowClear: true
+            placeholder: 'Select type'
         },
         ajaxOptions: {
             headers: {
@@ -19,8 +18,7 @@ $(document).ready(function() {
         source: '/priorities/getForSelect',
         select2: {
             width: 200,
-            placeholder: 'Select priority',
-            allowClear: true
+            placeholder: 'Select priority'
         },
         ajaxOptions: {
             headers: {
@@ -33,8 +31,7 @@ $(document).ready(function() {
         source: '/accounts/getForSelect',
         select2: {
             width: 200,
-            placeholder: 'Select assignee',
-            allowClear: true
+            placeholder: 'Select assignee'
         },
         ajaxOptions: {
             headers: {
@@ -52,8 +49,20 @@ $(document).ready(function() {
         ],
         select2: {
             width: 200,
-            placeholder: 'Select state',
-            allowClear: true
+            placeholder: 'Select state'
+        },
+        ajaxOptions: {
+            headers: {
+                "X-CSRF-TOKEN": $('.csrf').val()
+            }
+        }
+    });
+
+    $('#task-resolution').editable({
+        source: '/resolutions/getForSelect',
+        select2: {
+            width: 200,
+            placeholder: 'Select resolution'
         },
         ajaxOptions: {
             headers: {
@@ -63,10 +72,12 @@ $(document).ready(function() {
     });
 
     $('#task-type').removeClass('editable-click');
-    $('#task-priority').removeClass('editable-click')
-    $('#task-state').removeClass('editable-click')
-    $('#task-assignee').removeClass('editable-click')
-    $('#task-time-worked').removeClass('editable-click')
+    $('#task-priority').removeClass('editable-click');
+    $('#task-state').removeClass('editable-click');
+    $('#task-assignee').removeClass('editable-click');
+    $('#task-resolution').removeClass('editable-click');
+    $('#task-time-worked').removeClass('editable-click');
+
 
 
     if ($(document).height() > $(window).height()) {
