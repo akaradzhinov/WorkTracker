@@ -3,10 +3,7 @@ package bg.sofia.tu.task.type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -76,6 +73,22 @@ public class TypeController {
         typeRepository.delete(selectedType);
 
         return "redirect:/types";
+    }
+
+    @RequestMapping(value = "/getForSelect", method = RequestMethod.GET)
+    @ResponseBody
+    public String getTypes() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("[");
+
+        for(Type type : getAllTypes()) {
+            builder.append("{\"id\":\"").append(type.getValue()).append("\", \"text\":\"").append(type.getValue()).append("\"},");
+        }
+
+        builder.deleteCharAt(builder.length() - 1);
+        builder.append("]");
+
+        return builder.toString();
     }
 
     private Type getSelectedType(int id) {

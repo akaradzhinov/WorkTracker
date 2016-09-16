@@ -11,15 +11,19 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.css}" media="screen">
     <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap-theme.min.css}" media="screen">
     <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap-select.min.css}" media="screen">
+    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap-editable.css}" media="screen">
+    <link rel="stylesheet" th:href="@{/css/select2/select2.css}" media="screen">
 
     <!--WT App Stylesheet [ REQUIRED ]-->
     <link th:href="@{/css/main.css}" rel="stylesheet" media="screen">
 
-    <script th:src="@{/js/bootstrap/jquery.min.js}"></script>
+    <script th:src="@{/js/jquery/jquery.min.js}"></script>
+    <script th:src="@{/js/jquery/jquery-ui.min.js}"></script>
     <script th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
-    <script th:src="@{/js/bootstrap/validator.min.js}"></script>
-    <script th:src="@{/js/bootstrap/jquery-ui.min.js}"></script>
     <script th:src="@{/js/bootstrap/bootstrap-select.min.js}"></script>
+    <script th:src="@{/js/bootstrap/bootstrap-editable.min.js}"></script>
+    <script th:src="@{/js/select2/select2.js}"></script>
+    <script th:src="@{/js/validator/validator.min.js}"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function(event) {
             $('#basicAlertModal').on('show.bs.modal', function (event) {

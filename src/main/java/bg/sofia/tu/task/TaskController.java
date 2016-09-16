@@ -67,7 +67,7 @@ public class TaskController {
     public String save(@ModelAttribute("task") TaskRequest taskRequest, final Model model) {
         Task task = new Task();
         task.setId(taskRequest.getId());
-        task.setState(State.TODO);
+        task.setState(State.TO_DO);
         task.setCreated(new Timestamp(System.currentTimeMillis()));
         task.setDescription(taskRequest.getDescription());
         task.setSummary(taskRequest.getSummary());
@@ -94,8 +94,9 @@ public class TaskController {
         return "redirect:/tasks";
     }
 
-    @RequestMapping(value = "/update/priority/{id}/{value}/")
-    public String updatePriority(@PathVariable long id, @PathVariable String value, Model model) {
+    @RequestMapping(value = "/update/priority/{id}")
+    @ResponseBody
+    public String updatePriorityById(@PathVariable long id, @RequestParam(value = "value") String value, Model model) {
         Priority prior = priorityRepository.findOneByValue(value);
         Task currentTask = taskRepository.findOneById(id);
         currentTask.setPriority(prior);
@@ -107,11 +108,12 @@ public class TaskController {
             model.addAttribute("globalErrors", Arrays.asList("Could not update task priority!"));
         }
 
-        return "create_task";
+        return "success";
     }
 
-    @RequestMapping(value = "/update/type/{id}/{value}/")
-    public String updateType(@PathVariable long id, @PathVariable String value, Model model) {
+    @RequestMapping(value = "/update/type/{id}")
+    @ResponseBody
+    public String updateTypeById(@PathVariable long id, @RequestParam(value = "value") String value, Model model) {
         Type type = typeRepository.findOneByValue(value);
         Task currentTask = taskRepository.findOneById(id);
         currentTask.setType(type);
@@ -123,14 +125,61 @@ public class TaskController {
             model.addAttribute("globalErrors", Arrays.asList("Could not update task type!"));
         }
 
-        return "create_task";
+        return "success";
     }
 
+    @RequestMapping(value = "/update/state/{id}")
+    @ResponseBody
+    public String updateStateById(@PathVariable long id, @RequestParam(value = "value") String value, Model model) {
+        Task currentTask = taskRepository.findOneById(id);
+        currentTask.setState(State.valueOf(value.trim().replace(" ", "_")));
+
+        try {
+            taskRepository.save(currentTask);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            model.addAttribute("globalErrors", Arrays.asList("Could not update task type!"));
+        }
+
+        return "success";
+    }
+
+    @RequestMapping(value = "/update/assignee/{id}")
+    @ResponseBody
+    public String updateAssigneeById(@PathVariable long id, @RequestParam(value = "value") String value, Model model) {
+        Account account = accountRepository.findOneByUsername(value);
+        Task currentTask = taskRepository.findOneById(id);
+        currentTask.setAssignee(account);
+
+        try {
+            taskRepository.save(currentTask);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            model.addAttribute("globalErrors", Arrays.asList("Could not update task type!"));
+        }
+
+        return "success";
+    }
+
+//    @RequestMapping(value = "/update/assignee/{id}")
+//    @ResponseBody
+//    public String updateTimeWorkedById(@PathVariable long id, @RequestParam(value = "value") String value, Model model) {
+//        Task currentTask = taskRepository.findOneById(id);
+//        currentTask.setAssignee(account);
+//
+//        try {
+//            taskRepository.save(currentTask);
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//            model.addAttribute("globalErrors", Arrays.asList("Could not update task type!"));
+//        }
+//
+//        return "success";
+//    }
+
     @RequestMapping(value = "/update/state")
+    @ResponseBody
     public String updateState(@RequestBody UpdateStateRequest updateStateRequest, Model model) {
-        System.out.println();
-        System.out.println(updateStateRequest.toString());
-        System.out.println();
         Task currentTask = taskRepository.findOneById(updateStateRequest.getId());
         currentTask.setState(State.valueOf(updateStateRequest.getState()));
 
@@ -149,12 +198,16 @@ public class TaskController {
         Task currentTask = taskRepository.findOneById(id);
 
         model.addAttribute("task", currentTask);
+        model.addAttribute("allTypes", typeRepository.findAll());
+        model.addAttribute("allPriorities", priorityRepository.findAll());
+        model.addAttribute("allStates", Arrays.asList(State.values()));
+
         return "manage_task";
     }
 
 
     private List<Task> getToDoTasks() {
-        return taskRepository.findAllByStateOrderByPriorityPowerDesc(State.TODO);
+        return taskRepository.findAllByStateOrderByPriorityPowerDesc(State.TO_DO);
     }
 
     private List<Task> getInProgressTasks() {

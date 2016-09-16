@@ -101,6 +101,22 @@ class AccountController {
         return "redirect:/accounts";
     }
 
+    @RequestMapping(value = "/getForSelect", method = RequestMethod.GET)
+    @ResponseBody
+    public String getAccountUsernames() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("[");
+
+        for(Account account : accountRepository.findAllByEnabled(true)) {
+            builder.append("{\"id\":\"").append(account.getUsername()).append("\", \"text\":\"").append(account.getUsername()).append("\"},");
+        }
+
+        builder.deleteCharAt(builder.length() - 1);
+        builder.append("]");
+
+        return builder.toString();
+    }
+
     private List<Account> getAllAccounts() {
         return accountRepository.findAll();
     }

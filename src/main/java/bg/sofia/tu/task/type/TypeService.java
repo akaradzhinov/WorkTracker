@@ -34,8 +34,8 @@ public class TypeService {
             typeRepository.save(new Type("Bug", "Used for bugs"));
         }
 
-        if(typeRepository.findOneByValue("Technical Story") == null) {
-            typeRepository.save(new Type("Technical Story", "Used for technical stories"));
+        if(typeRepository.findOneByValue("Improvement") == null) {
+            typeRepository.save(new Type("Improvement", "Used for improvements"));
         }
 
         if(typeRepository.findOneByValue("Test") == null) {

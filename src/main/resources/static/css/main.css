@@ -27,6 +27,9 @@
     font-family: 'OpenSansSemiBoldItalic';
     src: url("../fonts/OpenSans-SemiboldItalic.ttf"); }
 /* OpenSans font family END */
+@font-face {
+    font-family: 'Glyphicons Halflings';
+    src: url("../fonts/glyphicons-halflings-regular.ttf"); }
 /* Login page START */
 #loginWrapper {
     margin: auto;
@@ -295,5 +298,9 @@ html, body, #container {
 
 .drop-active {
     border: 1.5px solid #ccc;
+}
+
+.manage-task {
+    margin: 40px 0 20px;
 }
 /* Common END */

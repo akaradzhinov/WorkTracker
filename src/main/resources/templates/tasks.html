@@ -11,13 +11,13 @@
     <li><a th:href="@{/tasks/create}">Create</a></li>
 </ol>
 <div layout:fragment="content" class="results">
+    <input type="hidden" class="csrf" th:value="${_csrf.token}">
     <div id="taskWrapper" class="row stack-over">
         <div id="canceledTasks" class="col-md-4 grey-style container-fluid draggable-container stack-over">
             <h2 class="text-center">Canceled</h2>
             <div th:each="task : ${canceledTasks}" class="task">
                 <a class="no-decoration" th:href="@{/tasks/view/__${task.id}__}">
                     <input type="hidden" class="task-id" th:value="${task.id}">
-                    <input type="hidden" class="csrf" th:value="${_csrf.token}">
                     <input type="hidden" class="state" th:value="${task.state}">
                     <div class="border-gray background-styled hover">
                         <div style="margin-top: 5px;" class="row no-margin">
@@ -47,7 +47,6 @@
             <div th:each="task : ${toDoTasks}" class="task">
                 <a class="no-decoration" th:href="@{/tasks/view/__${task.id}__}">
                     <input type="hidden" class="task-id" th:value="${task.id}">
-                    <input type="hidden" class="csrf" th:value="${_csrf.token}">
                     <input type="hidden" class="state" th:value="${task.state}">
                     <div class="border-gray background-styled hover">
                         <div style="margin-top: 5px;" class="row no-margin">
@@ -77,7 +76,6 @@
             <div th:each="task : ${inProgressTasks}" class="task">
                 <a class="no-decoration" th:href="@{/tasks/view/__${task.id}__}">
                     <input type="hidden" class="task-id" th:value="${task.id}">
-                    <input type="hidden" class="csrf" th:value="${_csrf.token}">
                     <input type="hidden" class="state" th:value="${task.state}">
                     <div class="border-gray background-styled hover">
                         <div style="margin-top: 5px;" class="row no-margin">

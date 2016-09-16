@@ -1,4 +1,74 @@
+//$.fn.editable.defaults.mode = 'inline';
+
 $(document).ready(function() {
+    $('#task-type').editable({
+        source: '/types/getForSelect',
+        select2: {
+            width: 200,
+            placeholder: 'Select type',
+            allowClear: true
+        },
+        ajaxOptions: {
+            headers: {
+                "X-CSRF-TOKEN": $('.csrf').val()
+            }
+        }
+    });
+
+    $('#task-priority').editable({
+        source: '/priorities/getForSelect',
+        select2: {
+            width: 200,
+            placeholder: 'Select priority',
+            allowClear: true
+        },
+        ajaxOptions: {
+            headers: {
+                "X-CSRF-TOKEN": $('.csrf').val()
+            }
+        }
+    });
+
+    $('#task-assignee').editable({
+        source: '/accounts/getForSelect',
+        select2: {
+            width: 200,
+            placeholder: 'Select assignee',
+            allowClear: true
+        },
+        ajaxOptions: {
+            headers: {
+                "X-CSRF-TOKEN": $('.csrf').val()
+            }
+        }
+    });
+
+    $('#task-state').editable({
+        source: [
+            {id: 'CANCELED', text: 'CANCELED'},
+            {id: 'TO DO', text: 'TO DO'},
+            {id: 'IN PROGRESS', text: 'IN PROGRESS'},
+            {id: 'DONE', text: 'DONE'}
+        ],
+        select2: {
+            width: 200,
+            placeholder: 'Select state',
+            allowClear: true
+        },
+        ajaxOptions: {
+            headers: {
+                "X-CSRF-TOKEN": $('.csrf').val()
+            }
+        }
+    });
+
+    $('#task-type').removeClass('editable-click');
+    $('#task-priority').removeClass('editable-click')
+    $('#task-state').removeClass('editable-click')
+    $('#task-assignee').removeClass('editable-click')
+    $('#task-time-worked').removeClass('editable-click')
+
+
     if ($(document).height() > $(window).height()) {
         // scrollbar
         if($("#taskWrapper").length > 0) {
@@ -87,7 +157,7 @@ $('#canceledTasks').droppable( {
 
 $('#toDoTasks').droppable( {
     drop: function (event, ui) {
-        var state = "TODO";
+        var state = "TO_DO";
 
         if(ui.draggable.find('.state').val() != state) {
             handleTaskDrop(event, ui, state);
@@ -160,7 +230,7 @@ function handleTaskDrop( event, ui, state ) {
         data: JSON.stringify(data),
         async: false,
         headers : {
-            "X-CSRF-TOKEN": ui.draggable.find('.csrf').val()
+            "X-CSRF-TOKEN": $('.csrf').val()
         },
         success: function() {
             //ui.draggable.draggable( 'option', 'revert', false );
