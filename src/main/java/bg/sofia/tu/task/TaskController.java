@@ -206,6 +206,24 @@ public class TaskController {
         return "success";
     }
 
+    @RequestMapping(value = "/update/summary/{id}")
+    @ResponseBody
+    public String updateSummaryById(@PathVariable long id, @RequestParam(value = "value") String value, Model model) {
+        Task currentTask = taskRepository.findOneById(id);
+        currentTask.setSummary(value);
+        currentTask.setUpdated(new Timestamp(System.currentTimeMillis()));
+
+        try {
+            taskRepository.save(currentTask);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            model.addAttribute("globalErrors", Arrays.asList("Could not update task resolution!"));
+        }
+
+        return "success";
+    }
+
+
     @RequestMapping(value = "/update/state")
     @ResponseBody
     public String updateState(@RequestBody UpdateStateRequest updateStateRequest, Model model) {

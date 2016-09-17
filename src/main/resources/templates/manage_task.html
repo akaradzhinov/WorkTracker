@@ -13,7 +13,8 @@
     <input type="hidden" class="csrf" th:value="${_csrf.token}">
     <div id="task-title" class="row">
         <h3 id="task-id" class="id col-md-1" th:text="'TM-' + ${task.id} + ': '"></h3>
-        <h3 id="task-summary" th:text="${task.summary}"></h3>
+        <a href="#" id="task-summary" data-type="textarea" class="col-md-11 no-decoration" data-pk="1" th:text="${task.summary}"
+           th:attr="data-url='/tasks/update/summary/' + ${task.id}">Summary</a>
     </div>
     <hr>
 

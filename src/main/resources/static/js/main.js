@@ -1,6 +1,31 @@
 //$.fn.editable.defaults.mode = 'inline';
 
 $(document).ready(function() {
+
+    $('#task-summary').on('shown', function(e, editable) {
+        $('.editable-input').addClass('width-100');
+    });
+
+    $('#task-summary').on('hidden', function(e, reason) {
+        $('.editable-input').removeClass('width-100');
+    });
+
+    $('#task-summary').editable({
+        title: 'Add summary',
+        escape: true,
+        placeholder: 'Add summary',
+        mode: 'inline',
+        rows: 2,
+        ajaxOptions: {
+            headers: {
+                "X-CSRF-TOKEN": $('.csrf').val()
+            }
+        },
+        success: function(response, newValue) {
+            if(response.status != 'error') window.location.reload(); //msg will be shown in editable form
+        }
+    });
+
     $('#task-type').editable({
         source: '/types/getForSelect',
         select2: {
@@ -102,7 +127,6 @@ $(document).ready(function() {
         escape: true,
         placeholder: 'Add Description',
         mode: 'inline',
-        width: 200,
         ajaxOptions: {
             headers: {
                 "X-CSRF-TOKEN": $('.csrf').val()
@@ -113,6 +137,7 @@ $(document).ready(function() {
         }
     });
 
+    $('#task-summary').removeClass('editable-click');
     $('#task-type').removeClass('editable-click');
     $('#task-priority').removeClass('editable-click');
     $('#task-state').removeClass('editable-click');
@@ -121,34 +146,7 @@ $(document).ready(function() {
     $('#task-description').removeClass('editable-click');
     $('#task-description').removeClass('form-inline');
     $('#task-time-worked').removeClass('editable-click');
-
-    updateOverlappingDivs();
-
 });
-
-$('#page-content').click(function(e) {
-    updateOverlappingDivs();
-});
-
-function updateOverlappingDivs() {
-    var footer = document.getElementById('footer').getBoundingClientRect();
-
-    if ($("#taskWrapper").length > 0) {
-        checkForOverlapAndUpdate(footer);
-    }
-
-    if ($('#manage-task').length > 0) {
-        checkForOverlapAndUpdate(footer);
-    }
-}
-
-function checkForOverlapAndUpdate(footer) {
-    var content = document.getElementById('page-content').getBoundingClientRect();
-
-    if (!(content.right < footer.left || content.left > footer.right || content.bottom < footer.top || content.top > footer.bottom)) {
-        $("#container").css({'display': 'block'});
-    }
-}
 
 $('.power').each( function() {
     var classToAdd=null;

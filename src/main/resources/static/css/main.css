@@ -85,6 +85,8 @@ header#navbar .navbar-content li#logout {
 #content-container {
     padding: 50px 15px 0 30px;
     width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 /* Main content area END */
@@ -133,7 +135,7 @@ header#navbar .navbar-content li#logout {
 
 /* Footer START */
 #footer {
-    padding: 50px 0 0 250px;
+    padding: 20px 20px 0 20px;
     bottom: 0;
     width: 100%;
 }
@@ -408,5 +410,17 @@ html, body, #container {
 #page-content {
     display: flex;
     flex-direction: column;
+    margin-bottom: 10px;
+}
+
+#task-summary {
+    font-size: 24px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    font-family: inherit;
+    line-height: 1.1;
+    display: block;
+    margin-left: 0px;
+    padding-left: 0px;
 }
 /* Common END */
