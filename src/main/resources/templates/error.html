@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--Bootstrap Stylesheet [ REQUIRED ]-->
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.css" media="screen"/>
+
+    <!--LMS App Stylesheet [ REQUIRED ]-->
+    <link href="css/main.css" rel="stylesheet"/>
+</head>
+<body>
+<div id="errorWrapper" layout:fragment="content">
+    <img src="img/tm-error.png"/>
+    <div class="form-group">
+        <h1>Oops, something went wrong.</h1>
+        <div class="row">
+            <p>Go back to <a th:href="@{/tasks}">home page.</a></p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

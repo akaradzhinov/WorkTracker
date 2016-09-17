@@ -31,7 +31,7 @@
     font-family: 'Glyphicons Halflings';
     src: url("../fonts/glyphicons-halflings-regular.ttf"); }
 /* Login page START */
-#loginWrapper {
+#loginWrapper, #errorWrapper {
     margin: auto;
     padding-top: 80px;
     width: 330px;
@@ -41,6 +41,11 @@
     text-align: left;
 }
 #loginWrapper img {
+    text-align: left;
+    margin-bottom: 50px;
+}
+
+#errorWrapper img {
     text-align: left;
     margin-bottom: 50px;
 }
