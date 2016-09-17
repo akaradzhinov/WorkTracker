@@ -48,7 +48,7 @@
 
             <div class="form-group m-5">
                 <label class="control-label l-1" for="summary">Summary</label><br />
-                <input id="summary" class="form-control" type="text" th:required="required" data-minlength="6" data-maxlength="160" th:field="${task.summary}"/>
+                <input id="summary" class="form-control" type="text" th:required="required" data-minlength="6" data-maxlength="255" th:field="${task.summary}"/>
                 <div class="help-block with-errors"></div>
             </div>
 

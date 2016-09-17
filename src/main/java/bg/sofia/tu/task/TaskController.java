@@ -210,7 +210,7 @@ public class TaskController {
     @ResponseBody
     public String updateSummaryById(@PathVariable long id, @RequestParam(value = "value") String value, Model model) {
         Task currentTask = taskRepository.findOneById(id);
-        currentTask.setSummary(cut(value, 160));
+        currentTask.setSummary(cut(value, 255));
         currentTask.setUpdated(new Timestamp(System.currentTimeMillis()));
 
         try {
