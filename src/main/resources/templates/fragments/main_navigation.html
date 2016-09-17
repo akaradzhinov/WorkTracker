@@ -8,7 +8,7 @@
             <div class="nano">
                 <div class="nano-content">
                     <ul id="mainnav-menu" class="list-group">
-                        <li th:attr="class=${#httpServletRequest.getRequestURI().contains('/tasks') ? 'active-link' : ''}">
+                        <li id="task-navigation" th:attr="class=${#httpServletRequest.getRequestURI().contains('/tasks') ? 'active-link' : ''}">
                             <a th:href="@{/tasks}">
                                 <span class="menu-title"> Tasks</span>
                             </a>

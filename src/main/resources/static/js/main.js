@@ -1,6 +1,9 @@
 //$.fn.editable.defaults.mode = 'inline';
 
 $(document).ready(function() {
+    if($('#manage-task').length > 0) {
+        $('#task-navigation').removeClass('active-link');
+    }
 
     $('#task-summary').on('shown', function(e, editable) {
         $('.editable-input').addClass('width-100');

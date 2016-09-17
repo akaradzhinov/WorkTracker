@@ -193,7 +193,7 @@ public class TaskController {
     @ResponseBody
     public String updateDescriptionById(@PathVariable long id, @RequestParam(value = "value") String value, Model model) {
         Task currentTask = taskRepository.findOneById(id);
-        currentTask.setDescription(value);
+        currentTask.setDescription(cut(value, 1000));
         currentTask.setUpdated(new Timestamp(System.currentTimeMillis()));
 
         try {
@@ -210,7 +210,7 @@ public class TaskController {
     @ResponseBody
     public String updateSummaryById(@PathVariable long id, @RequestParam(value = "value") String value, Model model) {
         Task currentTask = taskRepository.findOneById(id);
-        currentTask.setSummary(value);
+        currentTask.setSummary(cut(value, 160));
         currentTask.setUpdated(new Timestamp(System.currentTimeMillis()));
 
         try {
@@ -270,7 +270,6 @@ public class TaskController {
         return taskRepository.findAllByStateOrderByPriorityPowerDesc(State.CANCELED);
     }
 
-
     private List<String> getAccountUsernames() {
         return accountRepository.listAccoutUsernames();
     }
@@ -283,6 +282,14 @@ public class TaskController {
         }
 
         throw new UsernameNotFoundException("Could not find user with username=" + username);
+    }
+
+    private String cut(String value, int size) {
+        if(value.length() <= size) {
+            return value;
+        }
+
+        return value.substring(0, size);
     }
 
     public static class TaskRequest {
