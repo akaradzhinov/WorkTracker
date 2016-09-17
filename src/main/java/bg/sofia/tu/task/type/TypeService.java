@@ -23,23 +23,23 @@ public class TypeService {
     @PostConstruct
     protected void initialize() {
         if(typeRepository.findOneByValue("Story") == null) {
-            typeRepository.save(new Type("Story", "Used for stories"));
+            typeRepository.save(new Type("Story", "Used for stories", true));
         }
 
         if(typeRepository.findOneByValue("Task") == null) {
-            typeRepository.save(new Type("Task", "Used for tasks"));
+            typeRepository.save(new Type("Task", "Used for tasks", true));
         }
 
         if(typeRepository.findOneByValue("Bug") == null) {
-            typeRepository.save(new Type("Bug", "Used for bugs"));
+            typeRepository.save(new Type("Bug", "Used for bugs", true));
         }
 
         if(typeRepository.findOneByValue("Improvement") == null) {
-            typeRepository.save(new Type("Improvement", "Used for improvements"));
+            typeRepository.save(new Type("Improvement", "Used for improvements", true));
         }
 
         if(typeRepository.findOneByValue("Test") == null) {
-            typeRepository.save(new Type("Test", "Used for tests"));
+            typeRepository.save(new Type("Test", "Used for tests", true));
         }
     }
 

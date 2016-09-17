@@ -39,6 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/accounts/getForSelect", "/types/getForSelect", "/priorities/getForSelect", "/resolutions/getForSelect").hasRole("USER")
+                .antMatchers("/accounts/getForSelect", "/types/getForSelect", "/priorities/getForSelect", "/resolutions/getForSelect").hasRole("ADMIN")
                 .antMatchers("/accounts/**", "/types/**", "/priorities/**", "/resolutions/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
 

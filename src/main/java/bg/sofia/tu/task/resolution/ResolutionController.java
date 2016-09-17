@@ -23,7 +23,7 @@ public class ResolutionController {
 
     @RequestMapping
     public String index(Model model) {
-        model.addAttribute("allResolutions", getAllResolutions());
+        model.addAttribute("allResolutions", resolutionRepository.findAll());
 
         return "resolutions";
     }
@@ -61,16 +61,17 @@ public class ResolutionController {
         return "redirect:/resolutions";
     }
 
-    @RequestMapping("delete/{id}")
-    public String delete(@PathVariable int id, Model model) {
+    @RequestMapping("/state/{id}/{active}")
+    public String changeState(@PathVariable int id, @PathVariable boolean active, Model model) {
         Resolution selectedResolution = getSelectedResolution(id);
 
         if(selectedResolution == null) {
-            model.addAttribute("globalErrors", Arrays.asList("Could not find resolution for deletion!"));
+            model.addAttribute("globalErrors", Arrays.asList("Could not find resolution for disabling!"));
             return "resolutions";
         }
 
-        resolutionRepository.delete(selectedResolution);
+        selectedResolution.setEnabled(active);
+        resolutionRepository.save(selectedResolution);
 
         return "redirect:/resolutions";
     }
@@ -93,7 +94,7 @@ public class ResolutionController {
 
     private Resolution getSelectedResolution(int id) {
         Resolution selectedResolution = null;
-        final List<Resolution> resolutions = this.getAllResolutions();
+        final List<Resolution> resolutions = resolutionRepository.findAll();
         for (final Resolution resolution : resolutions) {
             if (resolution.getId() == id) {
                 selectedResolution = resolution;
@@ -104,6 +105,6 @@ public class ResolutionController {
     }
 
     private List<Resolution> getAllResolutions() {
-        return resolutionRepository.findAll();
+        return resolutionRepository.findAllByEnabled(true);
     }
 }

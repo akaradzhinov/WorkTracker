@@ -20,12 +20,15 @@ public class Priority {
 
     private int power;
 
+    private boolean enabled;
+
     public Priority() {}
 
-    public Priority(String value, String description, int power) {
+    public Priority(String value, String description, int power, boolean enabled) {
         this.value = value;
         this.description = description;
         this.power = power;
+        this.enabled = enabled;
     }
 
     @Id
@@ -64,6 +67,14 @@ public class Priority {
         this.power = power;
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Priority{");
@@ -71,6 +82,7 @@ public class Priority {
         sb.append(", value='").append(value).append('\'');
         sb.append(", description='").append(description).append('\'');
         sb.append(", power=").append(power);
+        sb.append(", enabled=").append(enabled);
         sb.append('}');
         return sb.toString();
     }

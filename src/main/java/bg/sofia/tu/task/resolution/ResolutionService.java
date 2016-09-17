@@ -23,19 +23,19 @@ public class ResolutionService {
     @PostConstruct
     protected void initialize() {
         if(resolutionRepository.findOneByValue("Unresolved") == null) {
-            resolutionRepository.save(new Resolution("Unresolved", "Task has no resolution"));
+            resolutionRepository.save(new Resolution("Unresolved", "Task has no resolution", true));
         }
 
         if(resolutionRepository.findOneByValue("Done") == null) {
-            resolutionRepository.save(new Resolution("Done", "Task is done"));
+            resolutionRepository.save(new Resolution("Done", "Task is done", true));
         }
 
         if(resolutionRepository.findOneByValue("Won't fix") == null) {
-            resolutionRepository.save(new Resolution("Won't fix", "Task won't be done"));
+            resolutionRepository.save(new Resolution("Won't fix", "Task won't be done", true));
         }
 
         if(resolutionRepository.findOneByValue("Duplicate") == null) {
-            resolutionRepository.save(new Resolution("Duplicate", "Task is duplicate to another"));
+            resolutionRepository.save(new Resolution("Duplicate", "Task is duplicate to another", true));
         }
     }
 

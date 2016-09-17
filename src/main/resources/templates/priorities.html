@@ -17,6 +17,7 @@
             <tr>
                 <th>Priority</th>
                 <th>Power</th>
+                <th>Enabled</th>
                 <th>Description</th>
             </tr>
             </thead>
@@ -24,10 +25,12 @@
             <tr th:each="row,rowStat : ${allPriorities}">
                 <td th:text="${row.value}"></td>
                 <td th:text="${row.power}"></td>
+                <td th:text="${row.enabled}">-</td>
                 <td th:text="${row.description}">-</td>
                 <td class="last">
                     <a class="btn btn-edit btn-sm btn-default" th:href="@{/priorities/edit/__${row.id}__}">Edit</a>
-                    <a class="btn btn-sm btn-danger" th:href="@{/priorities/delete/__${row.id}__}">Delete</a>
+                    <a class="btn btn-sm btn-disable-account" th:classappend="${row.enabled == true} ? btn-danger : btn-success"
+                       th:href="@{/priorities/state/__${row.id}__/__${!row.enabled}__}" th:text="${row.enabled == true ? 'Disable':'Enable'}">Disable</a>
                 </td>
             </tr>
             </tbody>

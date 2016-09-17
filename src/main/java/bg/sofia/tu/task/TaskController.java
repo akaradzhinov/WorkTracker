@@ -61,9 +61,9 @@ public class TaskController {
     @RequestMapping(value = "/create")
     public String create(Model model) {
         model.addAttribute("allAccountUsernames", getAccountUsernames());
-        model.addAttribute("allTypes", typeRepository.findAll());
-        model.addAttribute("allPriorities", priorityRepository.findAll());
-        model.addAttribute("allResolution", resolutionRepository.findAll());
+        model.addAttribute("allTypes", typeRepository.findAllByEnabled(true));
+        model.addAttribute("allPriorities", priorityRepository.findAllByEnabled(true));
+        model.addAttribute("allResolution", resolutionRepository.findAllByEnabled(true));
 
         model.addAttribute("task", new TaskRequest());
 
@@ -81,6 +81,7 @@ public class TaskController {
         task.setPoints(taskRequest.getPoints());
         task.setPriority(priorityRepository.findOneByValue(taskRequest.getPriority()));
         task.setType(typeRepository.findOneByValue(taskRequest.getType()));
+        task.setResolution(resolutionRepository.findOneByValue(taskRequest.getResolution()));
 
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         try {
@@ -326,6 +327,7 @@ public class TaskController {
         model.addAttribute("task", currentTask);
         model.addAttribute("allTypes", typeRepository.findAll());
         model.addAttribute("allPriorities", priorityRepository.findAll());
+        model.addAttribute("allResolutions", resolutionRepository.findAll());
         model.addAttribute("allStates", Arrays.asList(State.values()));
         model.addAttribute("commentRequest", new CommentRequest());
     }

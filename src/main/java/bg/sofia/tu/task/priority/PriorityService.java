@@ -23,23 +23,23 @@ public class PriorityService {
     @PostConstruct
     protected void initialize() {
         if(priorityRepository.findOneByValue("Highest") == null) {
-            priorityRepository.save(new Priority("Highest", "Work with highest priority", 5));
+            priorityRepository.save(new Priority("Highest", "Work with highest priority", 5, true));
         }
 
         if(priorityRepository.findOneByValue("High") == null) {
-            priorityRepository.save(new Priority("High", "Work with high priority", 4));
+            priorityRepository.save(new Priority("High", "Work with high priority", 4, true));
         }
 
         if(priorityRepository.findOneByValue("Medium") == null) {
-            priorityRepository.save(new Priority("Medium", "Work with medium priority", 3));
+            priorityRepository.save(new Priority("Medium", "Work with medium priority", 3, true));
         }
 
         if(priorityRepository.findOneByValue("Low") == null) {
-            priorityRepository.save(new Priority("Low", "Work with low priority", 2));
+            priorityRepository.save(new Priority("Low", "Work with low priority", 2, true));
         }
 
         if(priorityRepository.findOneByValue("Lowest") == null) {
-            priorityRepository.save(new Priority("Lowest", "Work with lowest priority", 1));
+            priorityRepository.save(new Priority("Lowest", "Work with lowest priority", 1, true));
         }
     }
 

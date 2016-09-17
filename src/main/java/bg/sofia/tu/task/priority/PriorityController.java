@@ -61,16 +61,17 @@ public class PriorityController {
         return "redirect:/priorities";
     }
 
-    @RequestMapping("delete/{id}")
-    public String delete(@PathVariable int id, Model model) {
+    @RequestMapping("/state/{id}/{active}")
+    public String changeState(@PathVariable int id, @PathVariable boolean active, Model model) {
         Priority selectedPriority = getSelectedPriority(id);
 
         if(selectedPriority == null) {
-            model.addAttribute("globalErrors", Arrays.asList("Could not find priority for deletion!"));
+            model.addAttribute("globalErrors", Arrays.asList("Could not find priority for disabling!"));
             return "priorities";
         }
 
-        priorityRepository.delete(selectedPriority);
+        selectedPriority.setEnabled(active);
+        priorityRepository.save(selectedPriority);
 
         return "redirect:/priorities";
     }
@@ -81,7 +82,7 @@ public class PriorityController {
         StringBuilder builder = new StringBuilder();
         builder.append("[");
 
-        for(Priority priority : priorityRepository.findAll()) {
+        for(Priority priority : getAllPriorities()) {
             builder.append("{\"id\":\"").append(priority.getValue()).append("\", \"text\":\"").append(priority.getValue()).append("\"},");
         }
 
@@ -101,5 +102,9 @@ public class PriorityController {
             }
         }
         return selectedPriority;
+    }
+
+    private List<Priority> getAllPriorities() {
+        return priorityRepository.findAllByEnabled(true);
     }
 }

@@ -2,6 +2,8 @@ package bg.sofia.tu.task.priority;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 /**
  * author: Aleksandar Karadzhinov
  * email: alexandar.karadzhinov@cayetanogaming.com
@@ -11,4 +13,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface PriorityRepository extends JpaRepository<Priority, Integer> {
 
     Priority findOneByValue(String value);
+
+    List<Priority> findAllByEnabled(boolean enabled);
 }

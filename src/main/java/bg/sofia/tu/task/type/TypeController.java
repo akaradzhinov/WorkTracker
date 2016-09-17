@@ -23,7 +23,7 @@ public class TypeController {
 
     @RequestMapping
     public String index(Model model) {
-        model.addAttribute("allTypes", getAllTypes());
+        model.addAttribute("allTypes", typeRepository.findAll());
 
         return "types";
     }
@@ -61,16 +61,17 @@ public class TypeController {
         return "redirect:/types";
     }
 
-    @RequestMapping("delete/{id}")
-    public String delete(@PathVariable int id, Model model) {
+    @RequestMapping("/state/{id}/{active}")
+    public String changeState(@PathVariable int id, @PathVariable boolean active, Model model) {
         Type selectedType = getSelectedType(id);
 
         if(selectedType == null) {
-            model.addAttribute("globalErrors", Arrays.asList("Could not find type for deletion!"));
+            model.addAttribute("globalErrors", Arrays.asList("Could not find type for disabling!"));
             return "types";
         }
 
-        typeRepository.delete(selectedType);
+        selectedType.setEnabled(active);
+        typeRepository.save(selectedType);
 
         return "redirect:/types";
     }
@@ -93,7 +94,7 @@ public class TypeController {
 
     private Type getSelectedType(int id) {
         Type selectedType = null;
-        final List<Type> types = this.getAllTypes();
+        final List<Type> types = typeRepository.findAll();
         for (final Type type : types) {
             if (type.getId() == id) {
                 selectedType = type;
@@ -104,6 +105,6 @@ public class TypeController {
     }
 
     private List<Type> getAllTypes() {
-        return typeRepository.findAll();
+        return typeRepository.findAllByEnabled(true);
     }
 }
