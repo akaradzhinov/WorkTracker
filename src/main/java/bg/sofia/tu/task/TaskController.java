@@ -2,6 +2,7 @@ package bg.sofia.tu.task;
 
 import bg.sofia.tu.account.Account;
 import bg.sofia.tu.account.AccountRepository;
+import bg.sofia.tu.comment.Comment;
 import bg.sofia.tu.enums.State;
 import bg.sofia.tu.task.priority.Priority;
 import bg.sofia.tu.task.priority.PriorityRepository;
@@ -100,6 +101,71 @@ public class TaskController {
         return "redirect:/tasks";
     }
 
+    @RequestMapping("/view/{id}")
+    public String view(@PathVariable long id, Model model) {
+        Task currentTask = taskRepository.findOneById(id);
+
+        setManageTaskAttributes(model, currentTask);
+
+        return "manage_task";
+    }
+
+    @RequestMapping(value = "/createComment", method = RequestMethod.POST)
+    public String view(@ModelAttribute("commentRequest") CommentRequest commentRequest, final Model model) {
+        if(commentRequest.getMessage().trim().length() == 0) {
+            model.addAttribute("globalErrors", Arrays.asList("Comment should not be empty!"));
+            setManageTaskAttributes(model, taskRepository.findOneById(commentRequest.getTaskId()));
+            return "manage_task";
+        }
+
+        User creator = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Task currentTask = taskRepository.findOneById(commentRequest.getTaskId());
+
+        Comment comment = new Comment();
+        comment.setUser(findAccount(creator.getUsername()));
+        comment.setTime(new Timestamp(System.currentTimeMillis()));
+        comment.setTask(currentTask);
+        comment.setMessage(cut(commentRequest.getMessage(), 512));
+
+        currentTask.getComments().add(comment);
+
+        try {
+            taskRepository.save(currentTask);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            model.addAttribute("globalErrors", Arrays.asList("Could not update task comments!"));
+            setManageTaskAttributes(model, currentTask);
+            return "manage_task";
+        }
+        setManageTaskAttributes(model, currentTask);
+
+        return "redirect:/tasks/view/" + currentTask.getId();
+    }
+
+    @RequestMapping("delete/{taskId}/comment/{commentId}")
+    public String delete(@PathVariable long taskId, @PathVariable long commentId, final Model model) {
+        Task currentTask = taskRepository.findOneById(taskId);
+
+        for(Comment comment : currentTask.getComments()) {
+            if(comment.getId() == commentId) {
+                currentTask.getComments().remove(comment);
+                break;
+            }
+        }
+
+        try {
+            taskRepository.save(currentTask);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            model.addAttribute("globalErrors", Arrays.asList("Could not delete task comments!"));
+            setManageTaskAttributes(model, currentTask);
+            return "manage_task";
+        }
+
+
+        return "redirect:/tasks/view/" + currentTask.getId();
+    }
+
     @RequestMapping(value = "/update/priority/{id}")
     @ResponseBody
     public String updatePriorityById(@PathVariable long id, @RequestParam(value = "value") String value, Model model) {
@@ -113,6 +179,7 @@ public class TaskController {
         } catch (Exception ex) {
             ex.printStackTrace();
             model.addAttribute("globalErrors", Arrays.asList("Could not update task priority!"));
+            return "error";
         }
 
         return "success";
@@ -131,6 +198,7 @@ public class TaskController {
         } catch (Exception ex) {
             ex.printStackTrace();
             model.addAttribute("globalErrors", Arrays.asList("Could not update task type!"));
+            return "error";
         }
 
         return "success";
@@ -148,6 +216,7 @@ public class TaskController {
         } catch (Exception ex) {
             ex.printStackTrace();
             model.addAttribute("globalErrors", Arrays.asList("Could not update task state!"));
+            return "error";
         }
 
         return "success";
@@ -166,6 +235,7 @@ public class TaskController {
         } catch (Exception ex) {
             ex.printStackTrace();
             model.addAttribute("globalErrors", Arrays.asList("Could not update task assignee!"));
+            return "error";
         }
 
         return "success";
@@ -184,6 +254,7 @@ public class TaskController {
         } catch (Exception ex) {
             ex.printStackTrace();
             model.addAttribute("globalErrors", Arrays.asList("Could not update task resolution!"));
+            return "error";
         }
 
         return "success";
@@ -200,7 +271,8 @@ public class TaskController {
             taskRepository.save(currentTask);
         } catch (Exception ex) {
             ex.printStackTrace();
-            model.addAttribute("globalErrors", Arrays.asList("Could not update task resolution!"));
+            model.addAttribute("globalErrors", Arrays.asList("Could not update task description!"));
+            return "error";
         }
 
         return "success";
@@ -217,7 +289,8 @@ public class TaskController {
             taskRepository.save(currentTask);
         } catch (Exception ex) {
             ex.printStackTrace();
-            model.addAttribute("globalErrors", Arrays.asList("Could not update task resolution!"));
+            model.addAttribute("globalErrors", Arrays.asList("Could not update task summary!"));
+            return "error";
         }
 
         return "success";
@@ -236,23 +309,19 @@ public class TaskController {
         } catch (Exception ex) {
             ex.printStackTrace();
             model.addAttribute("globalErrors", Arrays.asList("Could not update task state!"));
+            return "error";
         }
 
         return "tasks";
     }
 
-    @RequestMapping("/view/{id}")
-    public String view(@PathVariable long id, Model model) {
-        Task currentTask = taskRepository.findOneById(id);
-
+    private void setManageTaskAttributes(Model model, Task currentTask) {
         model.addAttribute("task", currentTask);
         model.addAttribute("allTypes", typeRepository.findAll());
         model.addAttribute("allPriorities", priorityRepository.findAll());
         model.addAttribute("allStates", Arrays.asList(State.values()));
-
-        return "manage_task";
+        model.addAttribute("commentRequest", new CommentRequest());
     }
-
 
     private List<Task> getToDoTasks() {
         return taskRepository.findAllByStateOrderByPriorityPowerDesc(State.TO_DO);
@@ -396,7 +465,6 @@ public class TaskController {
 
         private String state;
 
-
         public long getId() {
             return id;
         }
@@ -418,6 +486,37 @@ public class TaskController {
             final StringBuilder sb = new StringBuilder("UpdateStateRequest{");
             sb.append("id=").append(id);
             sb.append(", state='").append(state).append('\'');
+            sb.append('}');
+            return sb.toString();
+        }
+    }
+
+    public static class CommentRequest {
+        private long taskId;
+
+        private String message;
+
+        public long getTaskId() {
+            return taskId;
+        }
+
+        public void setTaskId(long taskId) {
+            this.taskId = taskId;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
+        @Override
+        public String toString() {
+            final StringBuilder sb = new StringBuilder("CommentRequest{");
+            sb.append("taskId=").append(taskId);
+            sb.append(", message='").append(message).append('\'');
             sb.append('}');
             return sb.toString();
         }

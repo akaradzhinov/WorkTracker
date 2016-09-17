@@ -371,10 +371,6 @@ html, body, #container {
     border-radius: 4px;
 }
 
-#manage-task {
-    display: flex;
-}
-
 #task-description {
     padding: 5px 10px 10px 10px;
 }
@@ -395,7 +391,6 @@ html, body, #container {
     border-radius: 0;
     border-color: transparent;
     font-weight: bold;
-    width: auto;
     padding-right: 0;
 }
 
@@ -421,6 +416,36 @@ html, body, #container {
     line-height: 1.1;
     display: block;
     margin-left: 0px;
+    padding-left: 0px;
+}
+
+#create-comment {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.dn {
+    display: none;
+}
+
+.comment-header {
+    margin-bottom: 5px;
+    background: #f5f5f5;
+}
+
+#comment-text {
+    margin-bottom: 5px;
+}
+
+#delete-comment {
+    float: right;
+    margin-right: 5px;
+}
+
+.no-comments {
+    font-style: italic;
+    margin-bottom: 10px;
+    margin-top: 5px;
     padding-left: 0px;
 }
 /* Common END */

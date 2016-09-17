@@ -158,7 +158,7 @@ public class Task {
         this.points = points;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "task", orphanRemoval = true)
     public List<Comment> getComments() {
         return comments;
     }

@@ -65,7 +65,7 @@ public class Comment {
         this.time = time;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "task_id")
     public Task getTask() {
         return task;

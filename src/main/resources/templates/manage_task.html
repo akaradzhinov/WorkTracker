@@ -26,14 +26,14 @@
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label class="control-label col-md-3" for="task-type">Type: </label>
-                        <a class="col-md-9 type" href="#" id="task-type" data-type="select2" data-pk="1" data-value="Task" data-title="Select type" th:text="${task.type.value}"
-                           th:attr="data-url='/tasks/update/type/' + ${task.id}">Select Type</a>
+                        <a class="col-md-9 type" href="#" id="task-type" data-type="select2" data-pk="1" data-value="Task" data-title="Select type"
+                           th:text="${task.type.value}" th:attr="data-url='/tasks/update/type/' + ${task.id}">Select Type</a>
                     </div>
 
                     <div class="form-group col-md-6">
                         <label class="control-label col-md-3" for="task-state">State: </label>
-                        <a class="col-md-9 task-button" href="#" id="task-state" data-type="select2" data-pk="1" data-value="TO DO" data-title="Select state" th:text="${task.state}"
-                           th:attr="data-url='/tasks/update/state/' + ${task.id}">Select State</a>
+                        <a class="col-md-9 task-button" href="#" id="task-state" data-type="select2" data-pk="1" data-value="TO DO" data-title="Select state"
+                           th:text="${task.state}" th:attr="data-url='/tasks/update/state/' + ${task.id}">Select State</a>
                     </div>
                 </div>
 
@@ -41,14 +41,14 @@
                     <div class="form-group col-md-6 power">
                         <div style="display:none;" th:text="${task.priority.power}"></div>
                         <label class="control-label col-md-3" for="task-priority">Priority: </label>
-                        <a class="col-md-9 " href="#" id="task-priority" data-type="select2" data-pk="1" data-value="Highest" data-title="Select priority" th:text="${task.priority.value}"
-                           th:attr="data-url='/tasks/update/priority/' + ${task.id}">Select Priority</a>
+                        <a class="col-md-9 " href="#" id="task-priority" data-type="select2" data-pk="1" data-value="Highest" data-title="Select priority"
+                           th:text="${task.priority.value}" th:attr="data-url='/tasks/update/priority/' + ${task.id}">Select Priority</a>
                     </div>
 
                     <div class="form-group col-md-6">
                         <label class="control-label col-md-3" for="task-resolution">Resolution: </label>
-                        <a class="col-md-9 task-button" href="#" id="task-resolution" data-type="select2" data-pk="1" data-value="Unresolved" data-title="Select resolution" th:text="${task.resolution.value}"
-                           th:attr="data-url='/tasks/update/resolution/' + ${task.id}">Select Resolution</a>
+                        <a class="col-md-9 task-button" href="#" id="task-resolution" data-type="select2" data-pk="1" data-value="Unresolved" data-title="Select resolution"
+                           th:text="${task.resolution.value}" th:attr="data-url='/tasks/update/resolution/' + ${task.id}">Select Resolution</a>
                     </div>
                 </div>
             </div>
@@ -70,8 +70,8 @@
 
                 <div class="form-group col-md-12 people">
                     <label class="control-label col-md-3" for="task-assignee">Assignee: </label>
-                    <a class="col-md-9" href="#" id="task-assignee" data-type="select2" data-pk="1" data-value="Task" data-title="Select assignee" th:text="${task.assignee.username}"
-                       th:attr="data-url='/tasks/update/assignee/' + ${task.id}">Select Assignee</a>
+                    <a class="col-md-9 padding-l-5" href="#" id="task-assignee" data-type="select2" data-pk="1" data-value="Task" data-title="Select assignee"
+                       th:text="${task.assignee.username}" th:attr="data-url='/tasks/update/assignee/' + ${task.id}">Select Assignee</a>
                 </div>
             </div>
 
@@ -93,9 +93,10 @@
 
     <button type="button" class="btn btn-info collapse-div" data-toggle="collapse" data-target="#task-comments">Comments</button>
     <div id="task-comments" class="collapse in description-border col-md-12">
+        <span th:if="${#lists.isEmpty(task.comments)}" class="col-md-12 no-comments" >No comments to display</span>
         <div th:each="comment : ${task.comments}">
             <div id="comment-content">
-                <div class="row">
+                <div class="row comment-header">
                     <button type="button" class="btn btn-default dropdown-toggle button-size col-md-1" data-toggle="collapse"
                             th:attr="data-target='#comment-text' + ${comment.id}" >
                         <span id="caret" class="caret"></span>
@@ -106,13 +107,28 @@
 
                     <span class="col-md-8 padding-l-5"
                        th:text="${'added a comment - ' + #dates.format(comment.time, 'dd/MM/yyyy HH:mm:SS')}">-</span>
+                    <a id="delete-comment" class="no-decoration glyphicon glyphicon-trash" th:href="@{/tasks/delete/__${task.id}__/comment/__${comment.id}__}"></a>
                 </div>
+
                 <div th:attr="id='comment-text' + ${comment.id}" class="collapse in comment-text">
                     <span class="col-md-12" th:text="${comment.message}">-</span>
                     <hr>
                 </div>
             </div>
         </div>
+
+        <button id="create-comment-btn" type="button" class="btn btn-info collapse-div" data-toggle="collapse" data-target="#create-comment">Comment</button>
+        <form data-toggle="validator" th:action="@{/tasks/createComment/}" th:object="${commentRequest}" method="post">
+            <div id="create-comment" class="collapse col-md-12 form-group m-5">
+                <input type="hidden" th:value="${task.id}" id="taskId" name="taskId">
+
+                <textarea id="comment-text" class="col-md-12" rows="5" th:field="${commentRequest.message}"></textarea>
+                <div class="help-block with-errors"></div>
+
+                <button class="btn btn-info">Submit</button>
+                <button id="cancel-btn" type="button" class="btn btn-danger">Cancel</button>
+            </div>
+        </form>
     </div>
 </div>
 </body>

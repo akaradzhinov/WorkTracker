@@ -151,6 +151,17 @@ $(document).ready(function() {
     $('#task-time-worked').removeClass('editable-click');
 });
 
+$('#create-comment-btn').click(function() {
+    $('#create-comment-btn').addClass('dn');
+    $('#content-container').animate({ scrollTop: $(document).height() }, "fast");
+});
+
+$('#cancel-btn').click(function() {
+    $('#create-comment-btn').removeClass('dn');
+    $('#create-comment').removeClass('in');
+    $('#comment-text').val('');
+});
+
 $('.power').each( function() {
     var classToAdd=null;
     switch($(this).find('div').text()) {
