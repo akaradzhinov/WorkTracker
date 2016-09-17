@@ -148,6 +148,13 @@ public class TaskController {
 
         for(Comment comment : currentTask.getComments()) {
             if(comment.getId() == commentId) {
+                User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                if(currentUser.getUsername().compareTo(comment.getUser().getUsername()) != 0) {
+                    model.addAttribute("globalErrors", Arrays.asList("Only the owner of the comment can delete it!"));
+                    setManageTaskAttributes(model, currentTask);
+                    return "manage_task";
+                }
+
                 currentTask.getComments().remove(comment);
                 break;
             }
