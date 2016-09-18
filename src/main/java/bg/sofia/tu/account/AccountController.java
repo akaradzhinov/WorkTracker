@@ -86,6 +86,40 @@ class AccountController {
         return "create_account";
     }
 
+    @RequestMapping("/changePassword/{username}")
+    public String changePassword(@PathVariable String username, Model model) {
+        this.account = accountRepository.findOneByUsername(username);
+
+        if(account == null) {
+            model.addAttribute("globalErrors", Arrays.asList("Could not find account with username=" + username));
+            return "accounts";
+        }
+
+        model.addAttribute("passwordData", new PasswordRequest());
+
+        return "change_password";
+    }
+
+    @RequestMapping("/password")
+    public String password(@ModelAttribute(name = "password") PasswordRequest passwordRequest, Model model) {
+        if(account == null) {
+            model.addAttribute("globalErrors", Arrays.asList("Could not find account"));
+            return "accounts";
+        }
+
+        account.setPassword(passwordEncoder.encode(passwordRequest.getPassword()));
+
+        try {
+            accountRepository.save(account);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            model.addAttribute("globalErrors", Arrays.asList("Username or email already exist!"));
+            return "change_password";
+        }
+
+        return "redirect:/accounts";
+    }
+
     @RequestMapping("/state/{id}/{active}")
     public String changeState(@PathVariable long id, @PathVariable boolean active, Model model) {
         Account selectedAccount = accountRepository.findOneById(id);
@@ -119,5 +153,25 @@ class AccountController {
 
     private List<Account> getAllAccounts() {
         return accountRepository.findAll();
+    }
+
+    public static class PasswordRequest {
+        private String password;
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
+
+        @Override
+        public String toString() {
+            final StringBuilder sb = new StringBuilder("PasswordRequest{");
+            sb.append("password='").append(password).append('\'');
+            sb.append('}');
+            return sb.toString();
+        }
     }
 }

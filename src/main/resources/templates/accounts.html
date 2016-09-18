@@ -31,6 +31,7 @@
                 <td th:text="${row.enabled}">-</td>
                 <td class="last">
                     <a class="btn btn-edit btn-sm btn-default" th:href="@{/accounts/edit/__${row.username}__}">Edit</a>
+                    <a class="btn btn-edit btn-sm btn-default" th:href="@{/accounts/changePassword/__${row.username}__}">Change Password</a>
                     <a class="btn btn-sm btn-disable-account" th:classappend="${row.enabled == true} ? btn-danger : btn-success"
                        th:href="@{/accounts/state/__${row.id}__/__${!row.enabled}__}" th:text="${row.enabled == true ? 'Disable':'Enable'}">Disable</a>
                 </td>
