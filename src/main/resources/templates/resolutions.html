@@ -8,7 +8,7 @@
 <ol class="breadcrumb" layout:fragment="breadcrumb">
     <li><a th:href="@{/tasks}">Home</a></li>
     <li class="active">Resolutions</li>
-    <li><a th:href="@{/resolutions/create}">Create</a></li>
+    <li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/resolutions/create}">Create</a></li>
 </ol>
 <div layout:fragment="content" class="results">
     <div>
@@ -25,7 +25,7 @@
                 <td th:text="${row.value}"></td>
                 <td th:text="${row.enabled}">-</td>
                 <td th:text="${row.description}">-</td>
-                <td class="last">
+                <td sec:authorize="hasRole('ROLE_ADMIN')" class="last">
                     <a class="btn btn-edit btn-sm btn-default" th:href="@{/resolutions/edit/__${row.id}__}">Edit</a>
                     <a class="btn btn-sm btn-disable-account" th:classappend="${row.enabled == true} ? btn-danger : btn-success"
                        th:href="@{/resolutions/state/__${row.id}__/__${!row.enabled}__}" th:text="${row.enabled == true ? 'Disable':'Enable'}">Disable</a>

@@ -38,17 +38,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/accounts/getForSelect", "/types/getForSelect", "/priorities/getForSelect", "/resolutions/getForSelect").hasRole("USER")
-                .antMatchers("/accounts/getForSelect", "/types/getForSelect", "/priorities/getForSelect", "/resolutions/getForSelect").hasRole("ADMIN")
+                .antMatchers("/tasks/**").permitAll()
+                .antMatchers("/types", "/types/getForSelect").permitAll()
+                .antMatchers("/priorities", "/priorities/getForSelect").permitAll()
+                .antMatchers("/resolutions", "/resolutions/getForSelect").permitAll()
                 .antMatchers("/accounts/**", "/types/**", "/priorities/**", "/resolutions/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
 
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .defaultSuccessUrl("/tasks", true)
+                        .usernameParameter("username")
+                        .passwordParameter("password")
+                        .defaultSuccessUrl("/tasks", true)
                 .permitAll()
 
                 .and()
