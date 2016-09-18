@@ -23,23 +23,23 @@ public class PriorityService {
     @PostConstruct
     protected void initialize() {
         if(priorityRepository.findOneByValue("Highest") == null) {
-            priorityRepository.save(new Priority("Highest", "Work with highest priority", 5, true));
+            priorityRepository.save(new Priority("Highest", "Should be done ASAP", 5, true));
         }
 
         if(priorityRepository.findOneByValue("High") == null) {
-            priorityRepository.save(new Priority("High", "Work with high priority", 4, true));
+            priorityRepository.save(new Priority("High", "Should be done soon", 4, true));
         }
 
         if(priorityRepository.findOneByValue("Medium") == null) {
-            priorityRepository.save(new Priority("Medium", "Work with medium priority", 3, true));
+            priorityRepository.save(new Priority("Medium", "Important, but can wait", 3, true));
         }
 
         if(priorityRepository.findOneByValue("Low") == null) {
-            priorityRepository.save(new Priority("Low", "Work with low priority", 2, true));
+            priorityRepository.save(new Priority("Low", "Not so important", 2, true));
         }
 
         if(priorityRepository.findOneByValue("Lowest") == null) {
-            priorityRepository.save(new Priority("Lowest", "Work with lowest priority", 1, true));
+            priorityRepository.save(new Priority("Lowest", "Consider doing when there is available time", 1, true));
         }
     }
 
