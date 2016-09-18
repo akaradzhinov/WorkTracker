@@ -1,18 +1,40 @@
 <!-- Basic modal -->
-<div class="modal fade" id="basicAlertModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" th:fragment="modal(title, text)">
+<div class="modal fade" id="basicAlertModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" th:fragment="modal(work,id)">
     <div class="modal-dialog modal-vertical-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="modalAlertTitle" th:text="${title != ''}? ${title} : 'Confirmation dialog'" th:if="${title != null}">Confirmation dialog</h4>
+                <h4 class="modal-title" id="modalAlertTitle">Log work</h4>
             </div>
-            <div class="modal-body" id="modalAlertBody">
-                <p th:text="${text != ''} ? ${text} : 'Are you sure you want to proceed?'">Are you sure you want to proceed?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary btn-save-changes" data-dismiss="modal">Continue</button>
-            </div>
+            <form data-toggle="validator" th:action="@{/tasks/log/}" th:object="${work}" method="post">
+                <div class="modal-body" id="modalAlertBody">
+                    <input type="hidden" th:value="${id}" id="id" name="id">
+                    <label class="control-label l-1" for="estimated">Time worked</label><br />
+                    <div id="estimated" class="row m-5">
+                        <div class="form-group col-md-4">
+                            <label class="control-label l-1" for="weeks">Weeks</label><br />
+                            <input id="weeks" class="form-control" type="number" th:required="required" min="0" th:field="${work.weeks}"/>
+                            <div class="help-block with-errors"></div>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label class="control-label l-1" for="days">Days</label><br />
+                            <input id="days" class="form-control" type="number" th:required="required" min="0" th:field="${work.days}"/>
+                            <div class="help-block with-errors"></div>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label class="control-label l-1" for="hours">Hours</label><br />
+                            <input id="hours" class="form-control" type="number" th:required="required" min="0" th:field="${work.hours}"/>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary btn-save-changes">Submit</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

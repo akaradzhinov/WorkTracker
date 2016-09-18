@@ -10,6 +10,7 @@ import bg.sofia.tu.task.resolution.Resolution;
 import bg.sofia.tu.task.resolution.ResolutionRepository;
 import bg.sofia.tu.task.type.Type;
 import bg.sofia.tu.task.type.TypeRepository;
+import bg.sofia.tu.utils.TimeConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -82,6 +83,8 @@ public class TaskController {
         task.setPriority(priorityRepository.findOneByValue(taskRequest.getPriority()));
         task.setType(typeRepository.findOneByValue(taskRequest.getType()));
         task.setResolution(resolutionRepository.findOneByValue(taskRequest.getResolution()));
+        task.setEstimatedWork(TimeConverter.convertTimeToString(taskRequest.getWeeks(), taskRequest.getDays(), taskRequest.getHours()));
+        task.setLoggedWork(TimeConverter.convertHoursToString(0));
 
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         try {
@@ -109,6 +112,34 @@ public class TaskController {
         setManageTaskAttributes(model, currentTask);
 
         return "manage_task";
+    }
+
+    @RequestMapping("/log")
+    public String logWork(@ModelAttribute("work") Work work, Model model) {
+        Task currentTask = taskRepository.findOneById(work.getId());
+
+        if(work.getHours() == 0 && work.getDays() == 0 && work.getWeeks() == 0) {
+            model.addAttribute("globalErrors", Arrays.asList("Invalid logged time: 0 week, 0 days, 0 hours."));
+            setManageTaskAttributes(model, currentTask);
+            return "manage_task";
+        }
+
+        int worked = TimeConverter.convertStringToHours(currentTask.getLoggedWork());
+        int loggedWork = (work.getWeeks() * 168) + (work.getDays() * 24) + work.getHours();
+        currentTask.setLoggedWork(TimeConverter.convertHoursToString(worked + loggedWork));
+        currentTask.setUpdated(new Timestamp(System.currentTimeMillis()));
+
+        try {
+            taskRepository.save(currentTask);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            model.addAttribute("globalErrors", Arrays.asList("Could not update logged time!"));
+            setManageTaskAttributes(model, currentTask);
+            return "manage_task";
+        }
+        setManageTaskAttributes(model, currentTask);
+
+        return "redirect:/tasks/view/" + currentTask.getId();
     }
 
     @RequestMapping(value = "/createComment", method = RequestMethod.POST)
@@ -357,6 +388,7 @@ public class TaskController {
         model.addAttribute("allResolutions", resolutionRepository.findAll());
         model.addAttribute("allStates", Arrays.asList(State.values()));
         model.addAttribute("commentRequest", new CommentRequest());
+        model.addAttribute("work", new Work());
     }
 
     private List<Task> getToDoTasks() {
@@ -414,6 +446,12 @@ public class TaskController {
         private String resolution;
 
         private int points;
+
+        private int weeks;
+
+        private int days;
+
+        private int hours;
 
 
         public long getId() {
@@ -480,6 +518,30 @@ public class TaskController {
             this.points = points;
         }
 
+        public int getWeeks() {
+            return weeks;
+        }
+
+        public void setWeeks(int weeks) {
+            this.weeks = weeks;
+        }
+
+        public int getDays() {
+            return days;
+        }
+
+        public void setDays(int days) {
+            this.days = days;
+        }
+
+        public int getHours() {
+            return hours;
+        }
+
+        public void setHours(int hours) {
+            this.hours = hours;
+        }
+
         @Override
         public String toString() {
             final StringBuilder sb = new StringBuilder("TaskRequest{");
@@ -491,6 +553,9 @@ public class TaskController {
             sb.append(", priority='").append(priority).append('\'');
             sb.append(", resolution='").append(resolution).append('\'');
             sb.append(", points=").append(points);
+            sb.append(", weeks=").append(weeks);
+            sb.append(", days=").append(days);
+            sb.append(", hours=").append(hours);
             sb.append('}');
             return sb.toString();
         }
@@ -553,6 +618,60 @@ public class TaskController {
             final StringBuilder sb = new StringBuilder("CommentRequest{");
             sb.append("taskId=").append(taskId);
             sb.append(", message='").append(message).append('\'');
+            sb.append('}');
+            return sb.toString();
+        }
+    }
+
+    private static class Work {
+        private long id;
+
+        private int weeks;
+
+        private int days;
+
+        private int hours;
+
+
+        public long getId() {
+            return id;
+        }
+
+        public void setId(long id) {
+            this.id = id;
+        }
+
+        public int getWeeks() {
+            return weeks;
+        }
+
+        public void setWeeks(int weeks) {
+            this.weeks = weeks;
+        }
+
+        public int getDays() {
+            return days;
+        }
+
+        public void setDays(int days) {
+            this.days = days;
+        }
+
+        public int getHours() {
+            return hours;
+        }
+
+        public void setHours(int hours) {
+            this.hours = hours;
+        }
+
+        @Override
+        public String toString() {
+            final StringBuilder sb = new StringBuilder("Work{");
+            sb.append("id=").append(id);
+            sb.append(", weeks=").append(weeks);
+            sb.append(", days=").append(days);
+            sb.append(", hours=").append(hours);
             sb.append('}');
             return sb.toString();
         }

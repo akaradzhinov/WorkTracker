@@ -73,6 +73,29 @@
                 <input id="points" class="form-control" type="number" th:required="required" min="0" th:field="${task.points}"/>
                 <div class="help-block with-errors"></div>
             </div>
+
+            <div class="m-5 border-gray">
+                <label class="control-label l-1" for="estimated">Estimated time</label><br />
+                <div id="estimated" class="row m-5">
+                    <div class="form-group col-md-4">
+                        <label class="control-label l-1" for="weeks">Weeks</label><br />
+                        <input id="weeks" class="form-control" type="number" th:required="required" min="0" th:field="${task.weeks}"/>
+                        <div class="help-block with-errors"></div>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label class="control-label l-1" for="days">Days</label><br />
+                        <input id="days" class="form-control" type="number" th:required="required" min="0" th:field="${task.days}"/>
+                        <div class="help-block with-errors"></div>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label class="control-label l-1" for="hours">Hours</label><br />
+                        <input id="hours" class="form-control" type="number" th:required="required" min="0" th:field="${task.hours}"/>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+            </div>
         </div>
         <br />
         <!--th:text="${task.id > 0 ? 'Update':'Create'}"-->

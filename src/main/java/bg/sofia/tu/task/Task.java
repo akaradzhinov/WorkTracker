@@ -51,6 +51,10 @@ public class Task {
 
     private Resolution resolution;
 
+    private String estimatedWork;
+
+    private String loggedWork;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public long getId() {
@@ -185,6 +189,24 @@ public class Task {
 
     public void setResolution(Resolution resolution) {
         this.resolution = resolution;
+    }
+
+    @Column(name = "estimated_work", nullable = false)
+    public String getEstimatedWork() {
+        return estimatedWork;
+    }
+
+    public void setEstimatedWork(String estimatedWork) {
+        this.estimatedWork = estimatedWork;
+    }
+
+    @Column(name = "logged_work", nullable = false)
+    public String getLoggedWork() {
+        return loggedWork;
+    }
+
+    public void setLoggedWork(String loggedWork) {
+        this.loggedWork = loggedWork;
     }
 
     @Override

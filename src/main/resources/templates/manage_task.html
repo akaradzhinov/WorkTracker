@@ -4,6 +4,7 @@
 </head>
 
 <body>
+<div layout:fragment="modal"><div th:replace="fragments/modal :: modal(${work}, ${task.id})"></div></div>
 <span layout:fragment="title">Manage Task</span>
 <ol class="breadcrumb" layout:fragment="breadcrumb">
     <li><a th:href="@{/tasks}">Home</a></li>
@@ -24,31 +25,43 @@
             <div id="task-details" class="collapse in">
 
                 <div class="row">
-                    <div class="form-group col-md-6">
-                        <label class="control-label col-md-3" for="task-type">Type: </label>
-                        <a class="col-md-9 type" href="#" id="task-type" data-type="select2" data-pk="1" data-title="Select type"
+                    <div class="form-group col-md-4">
+                        <label class="control-label col-md-4" for="task-type">Type: </label>
+                        <a class="col-md-8 type" href="#" id="task-type" data-type="select2" data-pk="1" data-title="Select type"
                            th:text="${task.type.value}" th:attr="data-url='/tasks/update/type/' + ${task.id}">Select Type</a>
                     </div>
 
-                    <div class="form-group col-md-6">
-                        <label class="control-label col-md-3" for="task-state">State: </label>
-                        <a class="col-md-9 task-button" href="#" id="task-state" data-type="select2" data-pk="1" data-title="Select state"
+                    <div class="form-group col-md-4">
+                        <label class="control-label col-md-4" for="task-state">State: </label>
+                        <a class="col-md-8 task-button" href="#" id="task-state" data-type="select2" data-pk="1" data-title="Select state"
                            th:text="${task.state}" th:attr="data-url='/tasks/update/state/' + ${task.id}">Select State</a>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label class="control-label col-md-4" for="task-estimated">Estimated: </label>
+                        <span class="col-md-8" href="#" id="task-estimated" th:text="${task.estimatedWork}"></span>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="form-group col-md-6 power">
+                    <div class="form-group col-md-4 power">
                         <div style="display:none;" th:text="${task.priority.power}"></div>
-                        <label class="control-label col-md-3" for="task-priority">Priority: </label>
-                        <a class="col-md-9 " href="#" id="task-priority" data-type="select2" data-pk="1" data-title="Select priority"
+                        <label class="control-label col-md-4" for="task-priority">Priority: </label>
+                        <a class="col-md-8" href="#" id="task-priority" data-type="select2" data-pk="1" data-title="Select priority"
                            th:text="${task.priority.value}" th:attr="data-url='/tasks/update/priority/' + ${task.id}">Select Priority</a>
                     </div>
 
-                    <div class="form-group col-md-6">
-                        <label class="control-label col-md-3" for="task-resolution">Resolution: </label>
-                        <a class="col-md-9 task-button" href="#" id="task-resolution" data-type="select2" data-pk="1" data-title="Select resolution"
+                    <div class="form-group col-md-4">
+                        <label class="control-label col-md-4" for="task-resolution">Resolution: </label>
+                        <a class="col-md-8 task-button" href="#" id="task-resolution" data-type="select2" data-pk="1" data-title="Select resolution"
                            th:text="${task.resolution.value}" th:attr="data-url='/tasks/update/resolution/' + ${task.id}">Select Resolution</a>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label class="control-label col-md-4" for="task-logged">Logged: </label>
+                        <!--<a class="col-md-8 no-decoration" href="#"  th:text="${task.loggedWork}"></a>-->
+                        <a class="col-md-8 no-decoration" id="task-logged" data-toggle="modal"
+                            data-target="#basicAlertModal" th:text="${task.loggedWork}"></a>
                     </div>
                 </div>
             </div>
