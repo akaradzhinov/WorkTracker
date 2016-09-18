@@ -20,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -47,6 +48,8 @@ public class TaskController {
 
     @Autowired
     private ResolutionRepository resolutionRepository;
+
+    private ArrayList<String> globalErrors = new ArrayList<>();
 
 
     @RequestMapping
@@ -139,13 +142,12 @@ public class TaskController {
             ex.printStackTrace();
             return showError("Could not update logged time!", currentTask, model);
         }
-        setManageTaskAttributes(model, currentTask);
 
         return "redirect:/tasks/view/" + currentTask.getId();
     }
 
     @RequestMapping(value = "/createComment", method = RequestMethod.POST)
-    public String view(@ModelAttribute("commentRequest") CommentRequest commentRequest, final Model model) {
+    public String createComment(@ModelAttribute("commentRequest") CommentRequest commentRequest, final Model model) {
         if(commentRequest.getMessage().trim().length() == 0) {
             return showError("Comment should not be empty!", taskRepository.findOneById(commentRequest.getTaskId()), model);
         }
@@ -167,7 +169,6 @@ public class TaskController {
             ex.printStackTrace();
             return showError("Could not update task comments!", currentTask, model);
         }
-        setManageTaskAttributes(model, currentTask);
 
         return "redirect:/tasks/view/" + currentTask.getId();
     }
@@ -382,12 +383,16 @@ public class TaskController {
         model.addAttribute("allStates", Arrays.asList(State.values()));
         model.addAttribute("commentRequest", new CommentRequest());
         model.addAttribute("work", new Work());
+
+        if(!globalErrors.isEmpty()) {
+            model.addAttribute("globalErrors", new ArrayList<>(globalErrors));
+            globalErrors.clear();
+        }
     }
 
     private String showError(String error, Task currentTask, Model model) {
-        model.addAttribute("globalErrors", Arrays.asList(error));
-        setManageTaskAttributes(model, currentTask);
-        return "manage_task";
+        globalErrors.add(error);
+        return "redirect:/tasks/view/" + currentTask.getId();
     }
 
     private List<Task> getToDoTasks() {
