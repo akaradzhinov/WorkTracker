@@ -22,21 +22,21 @@
                     <div class="border-gray background-styled hover">
                         <div style="margin-top: 5px;" class="row no-margin">
                             <div class="col-md-2">
-                                <span title="task id" class="id" th:text="${'TM-' + task.id}">-</span>
+                                <span title="Task id" class="id" th:text="${'TM-' + task.id}">-</span>
                             </div>
                             <div class="col-md-4 text-center">
-                                <span title="task type" class="type" th:text="${task.type.value}">-</span>
+                                <span th:attr="title='Task type: ' + ${task.type.description}" class="type" th:text="${task.type.value}">-</span>
                             </div>
                             <div class="col-md-2 text-center power">
                                 <div style="display:none;" th:text="${task.priority.power}"></div>
-                                <span title="task priority" th:text="${task.priority.value}">-</span>
+                                <span th:attr="title='Task priority: ' + ${task.priority.description}" th:text="${task.priority.value}">-</span>
                             </div>
                             <div class="col-md-4 text-center">
-                                <span title="task reporter" class="reporter" th:text="${task.reporter.username}">-</span>
+                                <span title="Task reporter" class="reporter" th:text="${task.reporter.username}">-</span>
                             </div>
                         </div>
                         <div class="row no-margin summary">
-                            <span title="task summary" th:text="${task.summary}">-</span>
+                            <span title="Task summary" th:text="${task.summary}">-</span>
                         </div>
                     </div>
                 </a>
@@ -51,21 +51,21 @@
                     <div class="border-gray background-styled hover">
                         <div style="margin-top: 5px;" class="row no-margin">
                             <div class="col-md-2">
-                                <span title="task id" class="id" th:text="${'TM-' + task.id}">-</span>
+                                <span title="Task id" class="id" th:text="${'TM-' + task.id}">-</span>
                             </div>
                             <div class="col-md-4 text-center">
-                                <span title="task type" class="type" th:text="${task.type.value}">-</span>
+                                <span th:attr="title='Task type: ' + ${task.type.description}" class="type" th:text="${task.type.value}">-</span>
                             </div>
                             <div class="col-md-2 text-center power">
                                 <div style="display:none;" th:text="${task.priority.power}"></div>
-                                <span title="task priority" th:text="${task.priority.value}">-</span>
+                                <span th:attr="title='Task priority: ' + ${task.priority.description}" th:text="${task.priority.value}">-</span>
                             </div>
                             <div class="col-md-4 text-center">
-                                <span title="task reporter" class="reporter" th:text="${task.reporter.username}">-</span>
+                                <span title="Task reporter" class="reporter" th:text="${task.reporter.username}">-</span>
                             </div>
                         </div>
                         <div class="row no-margin summary">
-                            <span title="task summary" th:text="${task.summary}">-</span>
+                            <span title="Task summary" th:text="${task.summary}">-</span>
                         </div>
                     </div>
                 </a>
@@ -80,21 +80,21 @@
                     <div class="border-gray background-styled hover">
                         <div style="margin-top: 5px;" class="row no-margin">
                             <div class="col-md-2">
-                                <span title="task id" class="id" th:text="${'TM-' + task.id}">-</span>
+                                <span title="Task id" class="id" th:text="${'TM-' + task.id}">-</span>
                             </div>
                             <div class="col-md-4 text-center">
-                                <span title="task type" class="type" th:text="${task.type.value}">-</span>
+                                <span th:attr="title='Task type: ' + ${task.type.description}" class="type" th:text="${task.type.value}">-</span>
                             </div>
                             <div class="col-md-2 text-center power">
                                 <div style="display:none;" th:text="${task.priority.power}"></div>
-                                <span title="task priority" th:text="${task.priority.value}">-</span>
+                                <span th:attr="title='Task priority: ' + ${task.priority.description}" th:text="${task.priority.value}">-</span>
                             </div>
                             <div class="col-md-4 text-center">
-                                <span title="task assignee" class="reporter" th:text="${task.assignee.username}">-</span>
+                                <span title="Task assignee" class="reporter" th:text="${task.assignee.username}">-</span>
                             </div>
                         </div>
                         <div class="row no-margin summary">
-                            <span title="task summary" th:text="${task.summary}">-</span>
+                            <span title="Task summary" th:text="${task.summary}">-</span>
                         </div>
                     </div>
                 </a>
@@ -110,21 +110,21 @@
                     <div class="border-gray background-styled hover">
                         <div style="margin-top: 5px;" class="row no-margin">
                             <div class="col-md-2">
-                                <span title="task id" class="id" th:text="${'TM-' + task.id}">-</span>
+                                <span title="Task id" class="id" th:text="${'TM-' + task.id}">-</span>
                             </div>
                             <div class="col-md-4 text-center">
-                                <span title="task type" class="type" th:text="${task.type.value}">-</span>
+                                <span th:attr="title='Task type: ' + ${task.type.description}" class="type" th:text="${task.type.value}">-</span>
                             </div>
                             <div class="col-md-2 text-center power">
                                 <div style="display:none;" th:text="${task.priority.power}"></div>
-                                <span title="task priority" th:text="${task.priority.value}">-</span>
+                                <span th:attr="title='Task priority: ' + ${task.priority.description}" th:text="${task.priority.value}">-</span>
                             </div>
                             <div class="col-md-4 text-center">
-                                <span title="task assignee" class="reporter" th:text="${task.assignee.username}">-</span>
+                                <span title="Task assignee" class="reporter" th:text="${task.assignee.username}">-</span>
                             </div>
                         </div>
                         <div class="row no-margin summary">
-                            <span title="task summary" th:text="${task.summary}">-</span>
+                            <span title="Task summary" th:text="${task.summary}">-</span>
                         </div>
                     </div>
                 </a>
