@@ -119,9 +119,13 @@ public class TaskController {
         Task currentTask = taskRepository.findOneById(work.getId());
 
         if(work.getHours() == 0 && work.getDays() == 0 && work.getWeeks() == 0) {
-            model.addAttribute("globalErrors", Arrays.asList("Invalid logged time: 0 week, 0 days, 0 hours."));
-            setManageTaskAttributes(model, currentTask);
-            return "manage_task";
+            return showError("Invalid logged time: 0 week, 0 days, 0 hours.", currentTask, model);
+        }
+
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(currentUser.getUsername().compareTo(currentTask.getAssignee().getUsername()) != 0) {
+            String error = "Only the owner of task can log work!";
+            return showError(error, currentTask, model);
         }
 
         int worked = TimeConverter.convertStringToHours(currentTask.getLoggedWork());
@@ -133,9 +137,7 @@ public class TaskController {
             taskRepository.save(currentTask);
         } catch (Exception ex) {
             ex.printStackTrace();
-            model.addAttribute("globalErrors", Arrays.asList("Could not update logged time!"));
-            setManageTaskAttributes(model, currentTask);
-            return "manage_task";
+            return showError("Could not update logged time!", currentTask, model);
         }
         setManageTaskAttributes(model, currentTask);
 
@@ -145,9 +147,7 @@ public class TaskController {
     @RequestMapping(value = "/createComment", method = RequestMethod.POST)
     public String view(@ModelAttribute("commentRequest") CommentRequest commentRequest, final Model model) {
         if(commentRequest.getMessage().trim().length() == 0) {
-            model.addAttribute("globalErrors", Arrays.asList("Comment should not be empty!"));
-            setManageTaskAttributes(model, taskRepository.findOneById(commentRequest.getTaskId()));
-            return "manage_task";
+            return showError("Comment should not be empty!", taskRepository.findOneById(commentRequest.getTaskId()), model);
         }
 
         User creator = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -165,9 +165,7 @@ public class TaskController {
             taskRepository.save(currentTask);
         } catch (Exception ex) {
             ex.printStackTrace();
-            model.addAttribute("globalErrors", Arrays.asList("Could not update task comments!"));
-            setManageTaskAttributes(model, currentTask);
-            return "manage_task";
+            return showError("Could not update task comments!", currentTask, model);
         }
         setManageTaskAttributes(model, currentTask);
 
@@ -182,9 +180,7 @@ public class TaskController {
             if(comment.getId() == commentId) {
                 User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
                 if(currentUser.getUsername().compareTo(comment.getUser().getUsername()) != 0) {
-                    model.addAttribute("globalErrors", Arrays.asList("Only the owner of the comment can delete it!"));
-                    setManageTaskAttributes(model, currentTask);
-                    return "manage_task";
+                    return showError("Only the owner of the comment can delete it!", currentTask, model);
                 }
 
                 currentTask.getComments().remove(comment);
@@ -196,11 +192,8 @@ public class TaskController {
             taskRepository.save(currentTask);
         } catch (Exception ex) {
             ex.printStackTrace();
-            model.addAttribute("globalErrors", Arrays.asList("Could not delete task comments!"));
-            setManageTaskAttributes(model, currentTask);
-            return "manage_task";
+            return showError("Could not delete task comments!", currentTask, model);
         }
-
 
         return "redirect:/tasks/view/" + currentTask.getId();
     }
@@ -389,6 +382,12 @@ public class TaskController {
         model.addAttribute("allStates", Arrays.asList(State.values()));
         model.addAttribute("commentRequest", new CommentRequest());
         model.addAttribute("work", new Work());
+    }
+
+    private String showError(String error, Task currentTask, Model model) {
+        model.addAttribute("globalErrors", Arrays.asList(error));
+        setManageTaskAttributes(model, currentTask);
+        return "manage_task";
     }
 
     private List<Task> getToDoTasks() {
