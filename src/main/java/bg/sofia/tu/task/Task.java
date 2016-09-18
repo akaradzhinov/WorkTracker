@@ -37,6 +37,8 @@ public class Task {
 
     private Timestamp resolved;
 
+    private Timestamp reopened;
+
     private Account assignee;
 
     private Account reporter;
@@ -122,6 +124,15 @@ public class Task {
         this.resolved = resolved;
     }
 
+    @Column(name = "reopened_date")
+    public Timestamp getReopened() {
+        return reopened;
+    }
+
+    public void setReopened(Timestamp reopened) {
+        this.reopened = reopened;
+    }
+
     @ManyToOne
     public Account getAssignee() {
         return assignee;
@@ -187,6 +198,7 @@ public class Task {
         sb.append(", created=").append(created);
         sb.append(", updated=").append(updated);
         sb.append(", resolved=").append(resolved);
+        sb.append(", reopened=").append(reopened);
         sb.append(", assignee=").append(assignee);
         sb.append(", reporter=").append(reporter);
         sb.append(", priority=").append(priority);
