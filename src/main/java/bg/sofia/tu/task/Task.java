@@ -92,7 +92,7 @@ public class Task {
         this.summary = summary;
     }
 
-    @Column(nullable = false, length = 1000)
+    @Column(nullable = false, length = 2000)
     public String getDescription() {
         return description;
     }
