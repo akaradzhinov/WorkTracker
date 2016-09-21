@@ -45,8 +45,6 @@ public class Task {
 
     private Priority priority;
 
-    private int points;
-
     private List<Comment> comments;
 
     private Resolution resolution;
@@ -164,15 +162,6 @@ public class Task {
         this.priority = priority;
     }
 
-    @Column(nullable = false)
-    public int getPoints() {
-        return points;
-    }
-
-    public void setPoints(int points) {
-        this.points = points;
-    }
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "task", orphanRemoval = true)
     public List<Comment> getComments() {
         return comments;
@@ -224,7 +213,6 @@ public class Task {
         sb.append(", assignee=").append(assignee);
         sb.append(", reporter=").append(reporter);
         sb.append(", priority=").append(priority);
-        sb.append(", points=").append(points);
         sb.append(", comments=").append(comments);
         sb.append(", resolution=").append(resolution);
         sb.append('}');

@@ -82,7 +82,6 @@ public class TaskController {
         task.setCreated(new Timestamp(System.currentTimeMillis()));
         task.setDescription(taskRequest.getDescription());
         task.setSummary(taskRequest.getSummary());
-        task.setPoints(taskRequest.getPoints());
         task.setPriority(priorityRepository.findOneByValue(taskRequest.getPriority()));
         task.setType(typeRepository.findOneByValue(taskRequest.getType()));
         task.setResolution(resolutionRepository.findOneByValue(taskRequest.getResolution()));
@@ -457,8 +456,6 @@ public class TaskController {
 
         private String resolution;
 
-        private int points;
-
         private int weeks;
 
         private int days;
@@ -522,14 +519,6 @@ public class TaskController {
             this.resolution = resolution;
         }
 
-        public int getPoints() {
-            return points;
-        }
-
-        public void setPoints(int points) {
-            this.points = points;
-        }
-
         public int getWeeks() {
             return weeks;
         }
@@ -564,7 +553,6 @@ public class TaskController {
             sb.append(", assignee='").append(assignee).append('\'');
             sb.append(", priority='").append(priority).append('\'');
             sb.append(", resolution='").append(resolution).append('\'');
-            sb.append(", points=").append(points);
             sb.append(", weeks=").append(weeks);
             sb.append(", days=").append(days);
             sb.append(", hours=").append(hours);
