@@ -41,6 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/types", "/types/getForSelect").permitAll()
                 .antMatchers("/priorities", "/priorities/getForSelect").permitAll()
                 .antMatchers("/resolutions", "/resolutions/getForSelect").permitAll()
+                .antMatchers("/accounts/getForSelect").permitAll()
                 .antMatchers("/accounts/**", "/types/**", "/priorities/**", "/resolutions/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
 
